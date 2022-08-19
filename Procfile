@@ -1,1 +1,1 @@
-web gunicorn benion_tech_django.wsgi:application --log-file -
+web: gunicorn benion_tech_django.wsgi:application --log-file -
