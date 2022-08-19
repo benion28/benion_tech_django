@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static %}
+{% load chat_tags %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Chat - Benion-Tech</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Favicons -->
+		<link href="{% static 'assets/img/benion-tech-favicon.png' %}" rel="icon">
+		<link href="{% static 'assets/img/benion-tech-icon.png' %}" rel="benion-tech-icon">
+
+		<link href="{% static 'assets/css/bootstrap-5-2-0.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/css/bootstrap-4-5-0.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+		<!-- Template Main CSS File -->
+    	<link href="{% static 'assets/css/style-kelly.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/css/style-chat.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+	</head>
+	<body>
+		<header id="header" class="fixed-top">
+		  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+			<h1 class="logo me-auto me-lg-0"><a href="/"> Benion-Tech</a></h1>
+			<!-- Uncomment below if you prefer to use an image logo -->
+			 <a href="/" class="logo"><img src="{% static 'assets/img/benion-tech-logo.png' %}" alt="" class="img-fluid"></a>
+
+			<nav id="navbar" class="navbar order-last order-lg-0">
+			  <ul>
+				<li><a href="/">Home</a></li>
+				{% if user.is_authenticated %}
+				  <li><a href="/user/dashboard">Dashboard</a></li>
+				{% endif %}
+				<li><a href="/resume">Resume</a></li>
+				<li><a href="/portfolio">Portfolio</a></li>
+				<li><a href="/contact">Contact</a></li>
+				<li><a class="active"  href="/about">About</a></li>
+				{% if user.is_authenticated %}
+				  <li><a class="badge bg-secondary text-light" href="/logout">Logout</a></li>
+				{% endif %}
+			  </ul>
+			  <i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+			<div class="header-social-links">
+			  <a href="https://twitter.com/benion28" class="twitter"><i class="bi bi-twitter"></i></a>
+			  <a href="https://facebook.com/biorver.7" class="facebook"><i class="bi bi-facebook"></i></a>
+			  <a href="https://instagram.com/biorver_benion28" class="instagram"><i class="bi bi-instagram"></i></a>
+			  <a href="https://linkedin.com/benion28" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+			</div>
+
+		  </div>
+
+		</header><!-- End Header -->
+		<main class="content">
+
+			<div class="container p-0">
+
+				<br><br><br>
+
+				<div class="pagetitle">
+				  <h1>Chat</h1>
+				  <nav>
+					<ol class="breadcrumb">
+					  <li class="breadcrumb-item"><a href="/">Home</a></li>
+						<li class="breadcrumb-item active">Chat</li>
+					</ol>
+				  </nav>
+				</div><!-- End Page Title -->
+
+				<h1 class="h3 mb-3">General Chats</h1>
+
+				<div class="card">
+					<div class="row g-0">
+						<div class="col-12 col-lg-5 col-xl-3 border-right p-3">
+
+							<br>
+							<h1 class="h3 mb-3 text-center">Chat Users</h1>
+
+							<div class="px-4 d-none d-md-block">
+								<div class="d-flex align-items-center">
+									<div class="flex-grow-1">
+										<input type="text" class="form-control my-3" placeholder="Search...">
+									</div>
+								</div>
+							</div>
+
+							{% for user in users %}
+								{% if username != user.username %}
+									<hr>
+									<a href="/chat/user/{{ user.username }}" class="list-group-item list-group-item-action border-0">
+										{% if role == 'admin' %}
+											<div class="badge bg-success float-right">{{ user.username | total_user_messages }}</div>
+										{% endif %}
+										<div class="d-flex align-items-start">
+											<img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="{{ user.first_name }} {{ user.last_name }}" width="40" height="40">
+											<div class="flex-grow-1 ml-3">
+												{{ user.first_name }} {{ user.first_name }}
+												<br>
+												<div class="text-muted text-success small"><em>({{ user.username }})</em></div>
+												<div class="badge badge-success small"></span> Online</div>
+											</div>
+										</div>
+									</a>
+									<hr>
+								{% endif %}
+							{% endfor %}
+
+							<hr class="d-block d-lg-none mt-1 mb-0">
+						</div>
+						<div class="col-12 col-lg-7 col-xl-9 p-3">
+
+							<br>
+							<h1 class="h3 mb-3 text-center">Chat Rooms</h1>
+
+							<div class="px-4 d-none d-md-block">
+								<div class="d-flex align-items-center">
+									<div class="flex-grow-1">
+										<input type="text" class="form-control my-3" placeholder="Search...">
+									</div>
+								</div>
+							</div>
+
+							{% for room in rooms %}
+								{% if room.name != 'General' %}
+									<hr>
+									<a href="/chat/room/{{ room.name }}" class="list-group-item list-group-item-action border-0">
+										<div class="badge float-right">
+											<a href="/chat/room/{{ room.name }}" class="btn btn-primary btn-sm" title="Join">Join <i class="bi bi-arrow-right"></i></a>
+										</div>
+										<div class="d-flex align-items-start">
+											<img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="{{ room.name }}" width="40" height="40">
+											<div class="flex-grow-1 ml-3">
+												{{ room.name }}
+												{% if role == 'admin' %}
+													<div class="badge badge-danger small">{{ room.name | total_room_messages }}</div>
+												{% endif %}
+											</div>
+										</div>
+									</a>
+									<hr>
+								{% endif %}
+							{% endfor %}
+
+							<hr class="d-block d-lg-none mt-1 mb-0">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script src="{% static 'assets/js/jquery-1-10-2.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery-3-6-0.slim.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+		<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+		<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+		<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+		<script src="{% static 'assets/js/bootstrap-4-5-0-bundle.min.js' %}"></script>
+		<script src="{% static 'assets/js/bootstrap-5-2-0.min.js' %}"></script>
+
+		<!-- Template Main JS File -->
+		<script src="{% static 'assets/js/main-kelly.js' %}"></script>
+
+	</body>
+</html>

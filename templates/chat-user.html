@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>User Chat - Benion-Tech</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Favicons -->
+		<link href="{% static 'assets/img/benion-tech-favicon.png' %}" rel="icon">
+		<link href="{% static 'assets/img/benion-tech-icon.png' %}" rel="benion-tech-icon">
+
+		<link href="{% static 'assets/css/bootstrap-5-2-0.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/css/bootstrap-4-5-0.min.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    	<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+		<!-- Template Main CSS File -->
+    	<link href="{% static 'assets/css/style-kelly.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/css/style-chat.css' %}" rel="stylesheet">
+		<link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+	</head>
+	<body>
+		<header id="header" class="fixed-top">
+		  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+			<h1 class="logo me-auto me-lg-0"><a href="/"> Benion-Tech</a></h1>
+			<!-- Uncomment below if you prefer to use an image logo -->
+			 <a href="/" class="logo"><img src="{% static 'assets/img/benion-tech-logo.png' %}" alt="" class="img-fluid"></a>
+
+			<nav id="navbar" class="navbar order-last order-lg-0">
+			  <ul>
+				<li><a href="/">Home</a></li>
+				{% if user.is_authenticated %}
+				  <li><a href="/user/dashboard">Dashboard</a></li>
+				{% endif %}
+				<li><a href="/resume">Resume</a></li>
+				<li><a href="/portfolio">Portfolio</a></li>
+				<li><a href="/contact">Contact</a></li>
+				<li><a class="active"  href="/about">About</a></li>
+				{% if user.is_authenticated %}
+				  <li><a class="badge bg-secondary text-light" href="/logout">Logout</a></li>
+				{% endif %}
+			  </ul>
+			  <i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+			<div class="header-social-links">
+			  <a href="https://twitter.com/benion28" class="twitter"><i class="bi bi-twitter"></i></a>
+			  <a href="https://facebook.com/biorver.7" class="facebook"><i class="bi bi-facebook"></i></a>
+			  <a href="https://instagram.com/biorver_benion28" class="instagram"><i class="bi bi-instagram"></i></a>
+			  <a href="https://linkedin.com/benion28" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+			</div>
+
+		  </div>
+
+		</header><!-- End Header -->
+
+		<main class="content">
+			<div class="container p-10">
+
+				<br><br><br>
+
+				<div class="pagetitle">
+				  <h1>Direct Messages</h1>
+				  <nav>
+					<ol class="breadcrumb">
+					  <li class="breadcrumb-item"><a href="/">Home</a></li>
+						<li class="breadcrumb-item"><a href="/chat">Chat</a></li>
+						<li class="breadcrumb-item active">Chat User</li>
+					</ol>
+				  </nav>
+				</div><!-- End Page Title -->
+
+				<h1 class="h3 mb-3">Chats</h1>
+
+				<div class="card">
+					<div class="col-12 col-lg-7 col-xl-9 p-3">
+						<div class="py-2 px-4 border-bottom d-none d-lg-block p-3">
+							<div class="d-flex align-items-center py-1 p-3">
+								<div class="position-relative">
+									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="{{ reciever.first_name }} {{ reciever.last_name }}" width="40" height="40">
+								</div>
+								<div class="flex-grow-1 pl-3">
+									<strong>{{ reciever.first_name }} {{ reciever.last_name }}</strong> <span text-success><i>(online)</i></span>
+									<div class="text-muted text-success small"><em>Typing...</em></div>
+								</div>
+								<div>
+									<button class="btn btn-primary btn-lg mr-1 px-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone feather-lg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></button>
+									<button class="btn btn-info btn-lg mr-1 px-3 d-none d-md-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video feather-lg"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></button>
+									<button class="btn btn-light border btn-lg px-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal feather-lg"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button>
+								</div>
+							</div>
+						</div>
+
+						<div class="position-relative">
+							<div class="chat-messages p-4">
+
+								{% for message in messages %}
+									{% if message.sender == sender.username and message.reciever == reciever.username  %}
+										<div class="chat-message-right mb-4">
+											<div>
+												<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="{{ sender.first_name }} {{ sender.last_name }}" width="40" height="40">
+											</div>
+											<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+												<div class="font-weight-bold mb-1 text-right">{{ sender.first_name }} {{ sender.last_name }}</div>
+												<div class="text-primary mb-1 text-right"><i>You ({{ sender.username }})</i></div>
+												<p id="sender-message" class="text-primary">{{ message.value }}</p>
+												<div class="text-muted small text-nowrap mt-2">{{ message.date }}</div>
+											</div>
+										</div>
+									{% endif %}
+
+
+									{% if message.sender == reciever.username and message.reciever == sender.username %}
+										<div class="chat-message-left pb-4">
+											<div>
+												<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="{{ user.first_name }} {{ user.last_name }}" width="40" height="40">
+											</div>
+											<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+												<div class="font-weight-bold mb-1">{{ reciever.first_name }} {{ reciever.last_name }}</div>
+												<div class="text-success mb-1"><i>({{ reciever.username }})</i></div>
+												<p id="reciever-message" class="text-success">{{ message.value }}</p>
+												<div class="text-muted small text-nowrap mt-2">{{ message.date }}</div>
+											</div>
+										</div>
+									{% endif %}
+
+								{% endfor %}
+
+								{% if total_messages == 0  %}
+									<div class="chat-message-left pb-4">
+										<div>
+											<img src="{% static 'assets/img/benion-tech-logo.png' %}" class="rounded-circle mr-1" alt="{{ bot }}" width="40" height="40">
+										</div>
+										<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+											<div class="font-weight-bold mb-1">{{ bot }}</div>
+											<div class="text-danger mb-1"><i>(bot)</i></div>
+											<p id="reciever-message" class="text-danger">Welcome {{ sender.username }} !! <br> There are no messages at the moment. Be the first to send a message!!</p>
+											<div class="text-muted small text-nowrap mt-2">Just now</div>
+										</div>
+									</div>
+								{% else %}
+									<div class="chat-message-left pb-4">
+										<div>
+											<img src="{% static 'assets/img/benion-tech-logo.png' %}" class="rounded-circle mr-1" alt="{{ bot }}" width="40" height="40">
+										</div>
+										<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+											<div class="font-weight-bold mb-1">{{ bot }}</div>
+											<div class="text-danger mb-1"><i>(bot)</i></div>
+											<p id="reciever-message" class="text-danger">Welcome {{ sender.username }} !! <br> Starting typing to continue sending messages!!</p>
+											<div class="text-muted small text-nowrap mt-2">Just now</div>
+										</div>
+									</div>
+								{% endif %}
+
+							</div>
+						</div>
+
+						<form id="user-form">
+							<input hidden name="room" type="text" class="form-control" id="room" value="general">
+							<input hidden name="sender" type="text" class="form-control" id="sender" value="{{ sender.username }}">
+							<input hidden name="reciever" type="text" class="form-control" id="reciever" value="{{ reciever.username }}">
+							{% csrf_token %}
+							<div class="input-group">
+								<input name="message" type="text" class="form-control" id="message" placeholder="Type your message">
+								<button type="submit" id="submit" class="btn btn-primary">
+									Send <i class="bi bi-send"></i>
+								</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script src="{% static 'assets/js/jquery-1-10-2.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery-3-6-0.slim.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+		<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+		<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+		<script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+		<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+		<script src="{% static 'assets/js/bootstrap-4-5-0-bundle.min.js' %}"></script>
+		<script src="{% static 'assets/js/bootstrap-5-2-0.min.js' %}"></script>
+
+		<!-- Template Main JS File -->
+		<script src="{% static 'assets/js/main-kelly.js' %}"></script>
+		<script src="{% static 'assets/js/main-chat.js' %}"></script>
+
+	</body>
+</html>

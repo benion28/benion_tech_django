@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Resume - Benion-Tech</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/benion-tech-favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/benion-tech-icon.png' %}" rel="benion-tech-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style-kelly.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <h1 class="logo me-auto me-lg-0"><a href="/"> Benion-Tech</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+         <a href="/" class="logo"><img src="{% static 'assets/img/benion-tech-logo.png' %}" alt="" class="img-fluid"></a>
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+            <li><a href="/">Home</a></li>
+            {% if user.is_authenticated %}
+              <li><a href="/user/dashboard">Dashboard</a></li>
+            {% endif %}
+            <li><a class="active" href="/resume">Resume</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="badge bg-secondary text-light" href="/logout">Logout</a></li>
+            {% else %}
+              <li><a class="badge bg-secondary text-light" href="/register">Register</a></li>
+              <li><a class="badge bg-secondary text-light" href="/login">Login</a></li>
+            {% endif %}
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+        <div class="header-social-links">
+          <a href="https://twitter.com/benion28" class="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="https://facebook.com/biorver.7" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://instagram.com/biorver_benion28" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://linkedin.com/benion28" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+        </div>
+
+      </div>
+
+    </header><!-- End Header -->
+
+    <main id="main">
+
+      <!-- ======= Resume Section ======= -->
+      <section id="resume" class="resume">
+        <div class="container" data-aos="fade-up">
+
+          <div class="section-title">
+            <h2>Resume</h2>
+            <p>
+              A a good back-end developer with solid background and knowledge in computer programming.
+              And also have good and progressive knowledge of MongoDB, the Concepts of Object-Oriented Programming,
+              the Concepts of Data Structures and Algorithms andthe Concepts of Design Patterns.
+              I'm quietly confident, naturally curious, and perpetually working on improving my chops one
+              design problem at a time. I'm a very ambitious front-end developer looking for a role in established IT company with
+              the opportunity to work with the latest technologies on challenging and diverse projects.
+              I'm Skilled with JavaScript, TypeScript and frameworks like Angular, React, Express, Strapi and
+              Redux. I also have basic knowledge of Python, C++, Java and MySQL.
+            </p>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="resume-title">Sumary</h3>
+              <div class="resume-item pb-0">
+                <h4>Bernard Bemshima Iorver</h4>
+                <p><em>
+                  An innovative tech mind with 5 years of experience working as a computer programmer.
+                  Capable of working with a variety of technology and software solutions, and graphic designs.
+                  Valuable team member who has experience diagnosing problems and developing solutions.
+                  Talented leader with unique ideas and a history of successful contributions in the field.
+                </em></p>
+                <p>
+                <ul>
+                  <li>90 Majelisa Street U/Yel Tel, Kaduna South, NIG</li>
+                  <li>(+234) 8175 619 445</li>
+                  <li>(+234) 8168 766 556</li>
+
+                  <li>bernard.iorver28@gmail.com</li>
+                </ul>
+                </p>
+              </div>
+
+              <h3 class="resume-title">Education</h3>
+              <div class="resume-item">
+                <h4>Bachelor of Forestry (Forestry &amp; Wildlife Management)</h4>
+                <h5>2015 – 2020</h5>
+                <p><em>
+                  Federal University of Agriculture, Makurdi (FUAM) now Joseph Sarwuan Tarka University Makurdi (JOSTUM), Benue State, NGA.
+                </em></p>
+              </div>
+
+              <div class="resume-item">
+                <h4>West African Senior School Certificate (WASSCE)</h4>
+                <h5>2009 – 2013</h5>
+                <p><em>
+                  	Victory Secondary School, Television, Kaduna State, NGA.
+                </em></p>
+              </div>
+
+              <div class="resume-item">
+                <h4>First School Leaving Certificate (FSLC)</h4>
+                <h5>2002 – 2008</h5>
+                <p><em>
+                  	LGEA Primary School, Sabon Yelwa Television, Kaduna State, NGA.
+                </em></p>
+              </div>
+
+
+              <h3 class="resume-title">Others</h3>
+              <div class="resume-item">
+                <h4>Technical Skills</h4>
+                <p>
+                  <ul>
+                    <li>
+                      Corel Draw, Adobe Photoshop, Microsoft Office Suits (Word, Powerpoint, Excel, Access, and Publisher).
+                    </li>
+                    <li>
+                      HTML, JavaScript, CSS, Java, R, Python, Angular, React, TypeScript, Redux, Strapi, Firebase,
+                      Github, Netlify, Heroku, Express, Bootstrap, Node, MongoDB, SQL.
+                    </li>
+                    <li>
+                      Google Analytics, Machine Learning, Tree Height-Diameter Modelling and Tree Species Distribution Modelling.
+                    </li>
+                  </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4>Abilities</h4>
+                <p>
+                  <ul>
+                    <li>
+                       A good Front-end and Back-end developer with solid background and knowledge in Computer Programming.
+                    </li>
+                    <li>
+                      Good and progressive knowledge on the concept of Object-oriented Programming, Design Patterns, Data Structures and Algorithms.
+                    </li>
+                    <li>
+                      Skilled with JavaScript, TypeScript and Python frameworks like Angular, React, Express, Redux and Django.
+                    </li>
+                  </ul>
+                </p>
+              </div>
+
+            </div>
+
+            <div class="col-lg-6">
+              <h3 class="resume-title">Courses &amp; Training</h3>
+              <div class="resume-item">
+                <h4>The Incubators Youth Outreach Network, Kaduna State, NGA.</h4>
+                <h5>2013</h5>
+                <p>
+                <ul>
+                  <li>Diploma in Microsoft Office Suit (Excel, Word, Powerpoint, Access and Publisher), Corel Draw and Adobe Photoshop.</li>
+                  <li>Software Installations and Computer Maintenance. </li>
+                </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4>Programming with Mosh (Online)</h4>
+                <h5>2017 – Present</h5>
+                <p>
+                <ul>
+                  <li>HTML, CSS, Python, Java, JavaScript, Angular, React, Github, Python, Redux, Express, MySQL, MongoDB, Node, Django, Data Science, and Machine Learning for Begineer Programmers.</li>
+                </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4> Edureka (Online)</h4>
+                <h5>2018 – Present</h5>
+                <p>
+                <ul>
+                  <li>R Programming for Beginners, Artificial Intelligence, Machine Learning with Python and R.</li>
+                </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4> Traversy (Online)</h4>
+                <h5>2018 – Present</h5>
+                <p>
+                <ul>
+                  <li>Python, JavaScript, Angular, React, Github, Netlify, Python, Redux, Express, MySQL, MongoDB, and Node for Intermediate Programmers.</li>
+                </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4> Joseph Sarwuan Tarka University Makurdi (Industrial Training)</h4>
+                <h5>2019 – 2020</h5>
+                <p>
+                <ul>
+                  <li>Nursery Operations, Museum and Hebarium Techniques, Forest Biometrics, Remote Sensing, Fire Service Training and Tree Modelling.</li>
+                </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4> Cross River National Park, Akampka, Cross River State (Industrial Training)</h4>
+                <h5>2019 – 2020</h5>
+                <p>
+                <ul>
+                  <li>Botanical Rambling, Ground Survey, Bird Identification, Forest Inventory, Fire arms and Ballistics, Anti-poaching Patrol, Ecotourism, Park Management and other park activities.</li>
+                </ul>
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4> Industrial Layout Timber-shed, Makurdi. Destiny Saw Mill Alaide. <br></br>Max-woody Tech and Furniture, Makurdi, Benue State (Industrial Training)</h4>
+                <h5>2019 – 2020</h5>
+                <p>
+                <ul>
+                  <li>Sawmilling, Wood Processing, Seasoning and Preservation.</li>
+                </ul>
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section><!-- End Resume Section -->
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+      <footer id="footer" class="footer">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Benion-Tech</span></strong>. All Rights Reserved
+        </div>
+      </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main-kelly.js' %}"></script>
+
+  </body>
+
+</html>

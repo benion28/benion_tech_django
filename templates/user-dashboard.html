@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Dashboard - Benion-Tech</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/benion-tech-favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/benion-tech-icon.png' %}" rel="benion-tech-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <img src="{% static 'assets/img/benion-tech-logo.png' %}" alt="">
+          <span class="d-none d-lg-block">Benion-Tech</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div><!-- End Logo -->
+
+      <div class="search-bar">
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+          <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+          <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+      </div><!-- End Search Bar -->
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+          <li class="nav-item d-block d-lg-none">
+            <a class="nav-link nav-icon search-bar-toggle " href="#">
+              <i class="bi bi-search"></i>
+            </a>
+          </li><!-- End Search Icon-->
+
+          <li class="nav-item dropdown">
+
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-bell"></i>
+              <span class="badge bg-primary badge-number">4</span>
+            </a><!-- End Notification Icon -->
+
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+              <li class="dropdown-header">
+                You have 3 new notifications
+                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-exclamation-circle text-warning"></i>
+                <div>
+                  <h4>Notification Three</h4>
+                  <p>This is the third notification</p>
+                  <p>20 min. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-x-circle text-danger"></i>
+                <div>
+                  <h4>Notification Two</h4>
+                  <p>This is the second notification</p>
+                  <p>1 hr. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-check-circle text-success"></i>
+                <div>
+                  <h4>Notification One</h4>
+                  <p>This is the first notification</p>
+                  <p>2 hrs. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="dropdown-footer">
+                <a href="#">Show all notifications</a>
+              </li>
+
+            </ul><!-- End Notification Dropdown Items -->
+
+          </li><!-- End Notification Nav -->
+
+          <li class="nav-item dropdown">
+
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-chat-left-text"></i>
+              <span class="badge bg-success badge-number">3</span>
+            </a><!-- End Messages Icon -->
+
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+              <li class="dropdown-header">
+                You have 4 new messages
+                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="message-item">
+                <a href="#">
+                  <img src="{% static 'assets/img/bleyoyo.jpg' %}" alt="" class="rounded-circle">
+                  <div>
+                    <h4>Blessing Linus</h4>
+                    <p>Hello benion this is bleyoyo...</p>
+                    <p>1 hr. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="message-item">
+                <a href="#">
+                  <img src="{% static 'assets/img/lordvin.jpg' %}" alt="" class="rounded-circle">
+                  <div>
+                    <h4>Victor Nwabudike</h4>
+                    <p>Hello benion this is lord vin...</p>
+                    <p>2 hrs. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="message-item">
+                <a href="#">
+                  <img src="{% static 'assets/img/mimi.jpg' %}" alt="" class="rounded-circle">
+                  <div>
+                    <h4>Faith Iorver</h4>
+                    <p>Hello benion this is mimi...</p>
+                    <p>3 hrs. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+                <li class="message-item">
+                <a href="#">
+                  <img src="{% static 'assets/img/blespretty.jpg' %}" alt="" class="rounded-circle">
+                  <div>
+                    <h4>Blessing Abbas</h4>
+                    <p>Hello benion this is blespretty...</p>
+                    <p>3 hrs. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="dropdown-footer">
+                <a href="#">Show all messages</a>
+              </li>
+
+            </ul><!-- End Messages Dropdown Items -->
+
+          </li><!-- End Messages Nav -->
+
+          <li class="nav-item dropdown pe-3">
+
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+              {% if user_details.profile == 'null' %}
+                <img src="{% static 'assets/img/user.png' %}" alt="Profile" class="rounded-circle">
+              {% else %}
+                <img src="{{ user_details.profile }}" alt="Profile" class="rounded-circle">
+              {% endif %}
+              <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.username }}</span>
+            </a><!-- End Profile Iamge Icon -->
+
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+              <li class="dropdown-header">
+                <h6>{{ user.first_name }} {{ user.last_name }}</h6>
+                <span>{{ user_details.job }}</span>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="/user/profile">
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="/user/setting">
+                  <i class="bi bi-gear"></i>
+                  <span>Account Settings</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                  <i class="bi bi-question-circle"></i>
+                  <span>Need Help?</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="/logout">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+
+            </ul><!-- End Profile Dropdown Items -->
+          </li><!-- End Profile Nav -->
+
+        </ul>
+      </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+      <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+          <a class="nav-link " href="/">
+            <i class="bi bi-house"></i>
+            <span>Home</span>
+          </a>
+        </li><!-- End Home Nav -->
+
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link " href="/user/dashboard">
+              <i class="bi bi-grid"></i>
+              <span>Dashboard</span>
+            </a>
+          </li><!-- End Dashboard Nav -->
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">
+            <i class="bi bi-journal-text"></i>
+              <span>Chat</span>
+          </a>
+        </li><!-- End Chat Nav -->
+
+        {% if user_details.role == 'admin' %}
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="/users/users-table">
+                  <i class="bi bi-circle"></i><span>Users Tables</span>
+                </a>
+              </li>
+              <li>
+                <a href="/users/cbt-users-table">
+                  <i class="bi bi-circle"></i><span>Cbt Users Tables</span>
+                </a>
+              </li>
+              <li>
+                <a href="/users/exams-table">
+                  <i class="bi bi-circle"></i><span>Exam Tables</span>
+                </a>
+              </li>
+              <li>
+                <a href="/users/scores-table">
+                  <i class="bi bi-circle"></i><span>Scores Tables</span>
+                </a>
+              </li>
+              <li>
+                <a href="/users/messages-table">
+                  <i class="bi bi-circle"></i><span>Messages Tables</span>
+                </a>
+              </li>
+            </ul>
+          </li><!-- End Tables Nav -->
+        {% endif %}
+
+        <li class="nav-heading">Pages</li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/user/profile">
+            <i class="bi bi-person"></i>
+            <span>Profile</span>
+          </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/contact">
+            <i class="bi bi-envelope"></i>
+            <span>Contact</span>
+          </a>
+        </li><!-- End Contact Page Nav -->
+
+        {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/register">
+              <i class="bi bi-card-list"></i>
+              <span>Register</span>
+            </a>
+          </li><!-- End Register Page Nav -->
+
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/login">
+              <i class="bi bi-box-arrow-in-right"></i>
+              <span>Login</span>
+            </a>
+          </li><!-- End Login Page Nav -->
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/resume">
+            <i class="bi bi-gem"></i>
+            <span>Resume</span>
+          </a>
+        </li><!-- End Resume Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/about">
+            <i class="bi bi-question-circle"></i>
+            <span>About</span>
+          </a>
+        </li><!-- End About Page Nav -->
+
+      </ul>
+
+    </aside><!-- End Sidebar-->
+
+    <main id="main" class="main">
+
+      <div class="pagetitle">
+        <h1>
+          Dashboard
+          {% if user.is_authenticated %}
+            (Welcome, {{user.username}})
+          {% endif %}
+        </h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+      <section class="section dashboard">
+        <div class="row">
+
+          <!-- Left side columns -->
+          <div class="col-lg-8">
+            <div class="row">
+
+              {% if user_details.role == 'admin' %}
+                <!-- Users Card -->
+                <div class="col-xxl-4 col-xl-12">
+                  <div class="card info-card customers-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Total Users</h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-people"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ total_users }}</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Users Card -->
+              {% endif %}
+
+              {% if user_details.role == 'admin' %}
+                <!-- Students Card -->
+                <div class="col-xxl-4 col-xl-12">
+                  <div class="card info-card sales-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Total Cbt Users</h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-people"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ total_cbt_users }}</h6>
+                          <a href="/benion-tech-server/cbt-users"><span class="badge bg-dark">Fetch Data</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Students Card -->
+              {% endif %}
+
+            {% if user_details.role == 'admin' %}
+                <!-- Revenue Card -->
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card revenue-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Total Images</h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-images"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ total_images }}</h6>
+                          <a href="/benion-tech-server/images"><span class="badge bg-dark">Fetch Data</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Revenue Card -->
+              {% endif %}
+
+              {% if user_details.role == 'admin' %}
+                <!-- Exams Card -->
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card customers-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Total Exams</h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-list"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ total_exams }}</h6>
+                          <a href="/benion-tech-server/exams"><span class="badge bg-dark">Fetch Data</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Exams Card -->
+              {% endif %}
+
+              {% if user_details.role == 'admin' %}
+                <!-- Scores Card -->
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card revenue-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Total Scores</h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-book"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ total_scores }}</h6>
+                          <a href="/benion-tech-server/scores"><span class="badge bg-dark">Fetch Data</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Scores Card -->
+              {% endif %}
+
+              {% if user_details.role == 'admin' %}
+                <!-- Messages Card -->
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card sales-card">
+                    <div class="card-body">
+                      <h5 class="card-title">Total Messages</h5>
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6>{{ total_contact_messages }}</h6>
+                          <a href="/benion-tech-server/messages"><span class="badge bg-dark">Fetch Data</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Messages Card -->
+              {% endif %}
+
+              <!-- Recent Deposits -->
+              <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="#">Today</a></li>
+                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="card-body">
+                    <h5 class="card-title">Recent Deposits <span>| Today</span></h5>
+
+                    <table class="table table-borderless datatable">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Users</th>
+                          <th scope="col">Method</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row"><a href="#">#19</a></th>
+                          <td>Benion Iorver</td>
+                          <td><a href="#" class="text-primary">Deposit for user</a></td>
+                          <td>$50</td>
+                          <td><span class="badge bg-danger">Rejected</span></td>
+                        </tr>
+                        <tr>
+                          <th scope="row"><a href="#">#17</a></th>
+                          <td>Benedict Iorver</td>
+                          <td><a href="#" class="text-primary">Transfer by user</a></td>
+                          <td>$121</td>
+                          <td><span class="badge bg-warning">Pending</span></td>
+                        </tr>
+                        <tr>
+                          <th scope="row"><a href="#">#12</a></th>
+                          <td>Bernard Iorver</td>
+                          <td><a href="#" class="text-primary">Transfer by user</a></td>
+                          <td>$73</td>
+                          <td><span class="badge bg-success">Approved</span></td>
+                        </tr>
+                        <tr>
+                          <th scope="row"><a href="#">#10</a></th>
+                          <td>Bemdoo Iorver</td>
+                          <td><a href="#" class="text-primary">Deposit for user</a></td>
+                          <td>$89</td>
+                          <td><span class="badge bg-danger">Rejected</span></td>
+                        </tr>
+                        <tr>
+                          <th scope="row"><a href="#">#14</a></th>
+                          <td>Bemshima Iorver</td>
+                          <td><a href="#" class="text-primary">Deposit by user</a></td>
+                          <td>$30</td>
+                          <td><span class="badge bg-success">Approved</span></td>
+                        </tr>
+                      <tr>
+                          <th scope="row"><a href="#">#18</a></th>
+                          <td>Benifresh Iorver</td>
+                          <td><a href="#" class="text-primary">Transfer by user</a></td>
+                          <td>$200</td>
+                          <td><span class="badge bg-warning">Pending</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+
+                </div>
+              </div><!-- End Recent Deposits -->
+
+            </div>
+          </div><!-- End Left side columns -->
+
+          <!-- Right side columns -->
+          <div class="col-lg-4">
+
+            <!-- Recent Activity -->
+            <div class="card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+
+                <div class="activity">
+
+                  <div class="activity-item d-flex">
+                    <div class="activite-label">20 min</div>
+                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                    <div class="activity-content">
+                      Commented on <a href="#" class="fw-bold text-dark">Github's</a> post
+                    </div>
+                  </div><!-- End activity item-->
+
+                  <div class="activity-item d-flex">
+                    <div class="activite-label">40 min</div>
+                    <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                    <div class="activity-content">
+                      Created a new guest user
+                    </div>
+                  </div><!-- End activity item-->
+
+                  <div class="activity-item d-flex">
+                    <div class="activite-label">1 hr</div>
+                    <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                    <div class="activity-content">
+                      Updated the score of a student
+                    </div>
+                  </div><!-- End activity item-->
+
+                  <div class="activity-item d-flex">
+                    <div class="activite-label">2 days</div>
+                    <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                    <div class="activity-content">
+                      Deleted user <a href="#" class="fw-bold text-dark">Jasson Dim</a> (2022/SDT/65389)
+                    </div>
+                  </div><!-- End activity item-->
+
+                  <div class="activity-item d-flex">
+                    <div class="activite-label">3 weeks</div>
+                    <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+                    <div class="activity-content">
+                      Posted a news updated with the technology
+                    </div>
+                  </div><!-- End activity item-->
+
+                  <div class="activity-item d-flex">
+                    <div class="activite-label">6 months</div>
+                    <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                    <div class="activity-content">
+                      Customized your display looks by choosing dark ode
+                    </div>
+                  </div><!-- End activity item-->
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Activity -->
+
+            <!-- News & Updates Traffic -->
+            <div class="card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body pb-0">
+                <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+
+                <div class="news">
+                  <div class="post-item clearfix">
+                    <img src="{% static 'assets/img/ronaldinho.jpg' %}" alt="">
+                    <h4><a href="#">News Update One</a></h4>
+                    <p>This is the first news update by demo creation...</p>
+                  </div>
+
+                  <div class="post-item clearfix">
+                    <img src="{% static 'assets/img/story.jpg' %}" alt="">
+                    <h4><a href="#">News Update Two</a></h4>
+                    <p>This is the second news update by demo creation...</p>
+                  </div>
+
+                  <div class="post-item clearfix">
+                    <img src="{% static 'assets/img/mkdgc.jpg' %}" alt="">
+                    <h4><a href="#">News Update Three</a></h4>
+                    <p>This is the third news update by demo creation...</p>
+                  </div>
+
+                  <div class="post-item clearfix">
+                    <img src="{% static 'assets/img/uamshot.jpg' %}" alt="">
+                    <h4><a href="#">News Update Four</a></h4>
+                    <p>This is the fourth news update by demo creation...</p>
+                  </div>
+
+                  <div class="post-item clearfix">
+                    <img src="{% static 'assets/img/teenwolf.jpg' %}" alt="">
+                    <h4><a href="#">News Update Five</a></h4>
+                    <p>This is the fifth news update by demo creation...</p>
+                  </div>
+
+                </div><!-- End sidebar recent posts-->
+
+              </div>
+            </div><!-- End News & Updates -->
+
+          </div><!-- End Right side columns -->
+
+        </div>
+      </section>
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Benion-Tech</span></strong>. All Rights Reserved
+      </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/chart.js/chart.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/quill/quill.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+  </body>
+
+</html>

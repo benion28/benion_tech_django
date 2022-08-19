@@ -1,0 +1,53 @@
+"""benion_tech_django URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+from django.conf.urls import handler404
+from . import views
+from user_app import views as user_app_view
+from chat_app import views as chat_app_view
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('user/', include('user_app.urls')),
+    path('chat/', include('chat_app.urls')),
+    path('practice-area/', include('practice_area.urls')),
+    path('send-message', chat_app_view.send_message, name='send-message'),
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
+    path('register', views.register, name='register'),
+    path('add-user', views.add_user, name='add-user'),
+    path('contact', views.contact, name='contact'),
+    path('resume', views.resume, name='resume'),
+    path('portfolio', views.portfolio, name='portfolio'),
+    path('portfolio/details/<str:params>', views.portfolio_details, name='portfolio-details'),
+    path('about', views.about, name='about'),
+    path('not-found', views.not_found, name='not-found'),
+    path('coming-soon', views.coming_soon, name='coming-soon'),
+    path('users/users-table/', user_app_view.users_table, name='users'),
+    path('users/cbt-users-table/', user_app_view.cbt_users_table, name='cbt-users-tables'),
+    path('benion-tech-server/cbt-users/', user_app_view.cbt_users, name='cbt-users'),
+    path('benion-tech-server/exams/', user_app_view.exams, name='exams'),
+    path('benion-tech-server/scores/', user_app_view.scores, name='scores'),
+    path('benion-tech-server/messages/', user_app_view.messages, name='messages'),
+    path('benion-tech-server/images/', user_app_view.images, name='images'),
+    path('users/exams-table/', user_app_view.exams_table, name='exams-table'),
+    path('users/scores-table/', user_app_view.scores_table, name='scores-table'),
+    path('users/messages-table/', user_app_view.messages_table, name='messages-table')
+]
+
+handler404 = views.not_found
