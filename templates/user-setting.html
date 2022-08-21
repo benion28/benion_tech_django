@@ -381,6 +381,13 @@
 
     <main id="main" class="main">
 
+      {% if success %}
+        <h6 class="text-success text-center">{{ message }}</h6>
+      {% endif %}
+      {% if error %}
+        <h6 class="text-danger text-center">{{ error }}</h6>
+      {% endif %}
+
       <div class="pagetitle">
         <h1>Settings</h1>
         <nav>

@@ -393,6 +393,14 @@
       </div><!-- End Page Title -->
 
       <section class="section">
+
+        {% if success %}
+          <h6 class="text-success text-center">{{ message }}</h6>
+        {% endif %}
+        {% if error %}
+          <h6 class="text-danger text-center">{{ error }}</h6>
+        {% endif %}
+
         <div class="row">
           <div class="col-lg-8">
 

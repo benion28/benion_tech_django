@@ -1,8 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
+import json
 from django.contrib import messages
 from user_app.models import UserDetail, GalleryImage
 from django.http import HttpResponse
+import urllib.request
+
+base_url = 'https://benion-tech-server.herokuapp.com'
+headers = {'Content-Type': 'application/json'}
+message = ''
+error = ''
 
 
 def home(request):
@@ -72,7 +79,27 @@ def logout(request):
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == 'POST':
+        dict_data = {
+            'name': request.POST['name'],
+            'email': request.POST['email'],
+            'subject': request.POST['subject'],
+            'message': request.POST['message']
+        }
+        json_data = json.dumps(dict_data)
+        post_data = json_data.encode("utf-8")
+        # response = urllib.request.urlopen(
+        #     f'{base_url}/benion-cbt/api/cbt-scores', data=post_data, headers=headers
+        # ).read()
+        response = False
+        if response:
+            error = 'Sorry an error occurred!'
+            return render(request, 'contact.html', {'success': False, 'error': error})
+        else:
+            message = 'Your message has been sent. Thank you!'
+            return render(request, 'contact.html', {'success': True, 'message': message})
+    else:
+        return render(request, 'contact.html', {})
 
 
 def about(request):
@@ -84,11 +111,35 @@ def resume(request):
 
 
 def not_found(request, exception):
-    return render(request, 'not-found.html')
+    return render(request, 'not-found.html', {'error': exception})
+
+
+def server_error(request):
+    return render(request, 'server-error.html')
 
 
 def coming_soon(request):
-    return render(request, 'coming-soon.html')
+    if request.method == 'POST':
+        dict_data = {
+            'name': request.POST['name'],
+            'email': request.POST['email'],
+            'subject': request.POST['subject'],
+            'message': request.POST['message']
+        }
+        json_data = json.dumps(dict_data)
+        post_data = json_data.encode("utf-8")
+        # response = urllib.request.urlopen(
+        #     f'{base_url}/benion-cbt/api/cbt-scores', data=post_data, headers=headers
+        # ).read()
+        response = False
+        if response:
+            error = 'Sorry an error occurred!'
+            return render(request, 'coming-soon.html', {'success': False, 'message': error})
+        else:
+            message = 'Your message has been sent. Thank you!'
+            return render(request, 'coming-soon.html', {'success': True, 'message': message})
+    else:
+        return render(request, 'coming-soon.html', {})
 
 
 def portfolio(request):

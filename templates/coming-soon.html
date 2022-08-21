@@ -31,6 +31,13 @@
     <header id="header" class="d-flex align-items-center">
       <div class="container d-flex flex-column align-items-center">
 
+        {% if success %}
+          <h6 class="text-success text-center">{{ message }}</h6>
+        {% endif %}
+        {% if error %}
+          <h6 class="text-danger text-center">{{ error }}</h6>
+        {% endif %}
+
         <h1>ComingSoon</h1>
         <h2>We're working hard to improve our website and we'll be ready to launch after</h2>
         <div class="countdown d-flex justify-content-center" data-count="2023/12/5">
@@ -120,7 +127,13 @@
 
           <div class="row justify-content-center">
             <div class="col-lg-10">
-              <form action="/contact" method="post" role="form" class="php-email-form">
+              <form action="/coming-soon" method="post" class="php-email-form">
+                {% csrf_token %}
+
+                {% for message in messages %}
+                  <h6 class="text-warning text-center">{{ message }}</h6>
+                {% endfor %}
+
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -134,11 +147,6 @@
                 </div>
                 <div class="form-group mt-3">
                   <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-                </div>
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
                 </div>
                 <div class="text-center"><button type="submit">Send Message</button></div>
               </form>

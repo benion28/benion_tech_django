@@ -8,6 +8,9 @@ import urllib.request
 
 
 base_url = 'https://benion-tech-server.herokuapp.com'
+message = ''
+error = ''
+user_data = False
 
 
 # Create your views here.
@@ -75,9 +78,11 @@ def user_profile(request):
                 )
                 target_user.save(force_update=True)
                 target_item.save(force_update=True)
-                return redirect('/user/profile')
+                message = 'Details saved successfully'
+                return render(request, 'user-profile.html', {'user_details': user_details, 'success': True, 'message': message})
             else:
-                return redirect('/user/profile')
+                error = 'Target user not found'
+                return render(request, 'user-profile.html', {'user_details': user_details, 'success': False, 'error': error})
         else:
             return render(request, 'user-profile.html', {'user_details': user_details})
 
@@ -87,6 +92,7 @@ def user_setting(request):
         return redirect('/login')
     else:
         username = auth.get_user(request)
+        user_details = UserDetail.objects.get(username=username)
         if request.method == 'POST':
             password1 = request.POST['password1']
             password = request.POST['password']
@@ -95,13 +101,15 @@ def user_setting(request):
             if user.check_password(password1):
                 if password == password2:
                     user.set_password(password)
-                    return redirect('/user/setting')
+                    message = 'Password updated successfully'
+                    return render(request, 'user-setting.html', {'user_details': user_details, 'success': True, 'message': message})
                 else:
-                    return redirect('/user/setting')
+                    error = 'Passwords do not match'
+                    return render(request, 'user-setting.html', {'user_details': user_details, 'success': False, 'error': error})
             else:
-                return redirect('/user/setting')
+                error = 'Incorrect password'
+                return render(request, 'user-setting.html', {'user_details': user_details, 'success': False, 'error': error})
         else:
-            user_details = UserDetail.objects.get(username=username)
             return render(request, 'user-setting.html', {'user_details': user_details})
 
 
@@ -114,14 +122,28 @@ def users_table(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            data = {
-                'users': users,
-                'total_users': len(users),
-                'user_details': user_details,
-                'total_user_details': len(details),
-                'details': details
-            }
-            return render(request, 'users-table.html', data)
+            if user_data:
+                message = 'User deleted successfully'
+                return render(request, 'users-table.html', {
+                    'users': users,
+                    'total_users': len(users),
+                    'user_details': user_details,
+                    'total_user_details': len(details),
+                    'details': details,
+                    'success': True,
+                    'message': message
+                })
+            else:
+                error = 'User deleted successfully'
+                return render(request, 'users-table.html', {
+                    'users': users,
+                    'total_users': len(users),
+                    'user_details': user_details,
+                    'total_user_details': len(details),
+                    'details': details,
+                    'success': False,
+                    'error': error
+                })
         else:
             return redirect('/user/dashboard')
 
@@ -206,9 +228,12 @@ def remove_profile(request, id):
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
             if UserDetail.objects.filter(id=id).exists():
-                return redirect('/user/profile')
+                # update photo
+                message = 'Photo updated successfully'
+                return render(request, 'user-profile.html', {'user_details': user_details, 'success': True, 'message': message})
             else:
-                return redirect('/user/profile')
+                error = 'Target user not found'
+                return render(request, 'user-profile.html', {'user_details': user_details, 'success': False, 'message': error})
         else:
             return redirect('/user/dashboard')
 
@@ -225,8 +250,10 @@ def delete_user(request, user):
                 target_user.delete()
                 target_details = UserDetail.objects.get(username=user)
                 target_details.delete()
+                user_data = True
                 return redirect('/users/users-table')
             else:
+                user_data = False
                 return redirect('/users/users-table')
         else:
             return redirect('/user/dashboard')
@@ -274,9 +301,23 @@ def edit_user(request, params):
                     )
                     target_user.save(force_update=True)
                     target_item.save(force_update=True)
-                    return redirect(f'/users/edit-user/{ params }')
+                    message = f'User {params} updated successfully'
+                    return render(request, 'edit-user.html', {
+                        'user_details': user_details,
+                        'params_details': params_details,
+                        'params': user,
+                        'message': message,
+                        'success': True
+                    })
                 else:
-                    return redirect(f'/users/edit-user/{ params }')
+                    error = 'Target user not found'
+                    return render(request, 'edit-user.html', {
+                        'user_details': user_details,
+                        'params_details': params_details,
+                        'params': user,
+                        'error': error,
+                        'success': False
+                    })
             else:
                 data = {
                     'user_details': user_details,

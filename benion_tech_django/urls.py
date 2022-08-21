@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import handler404
+from django.conf.urls import handler404, handler500
 from . import views
 from user_app import views as user_app_view
 from chat_app import views as chat_app_view
@@ -36,7 +36,6 @@ urlpatterns = [
     path('portfolio', views.portfolio, name='portfolio'),
     path('portfolio/details/<str:params>', views.portfolio_details, name='portfolio-details'),
     path('about', views.about, name='about'),
-    path('not-found', views.not_found, name='not-found'),
     path('coming-soon', views.coming_soon, name='coming-soon'),
     path('users/users-table/', user_app_view.users_table, name='users'),
     path('users/cbt-users-table/', user_app_view.cbt_users_table, name='cbt-users-tables'),
@@ -51,3 +50,4 @@ urlpatterns = [
 ]
 
 handler404 = views.not_found
+handler500 = views.server_error

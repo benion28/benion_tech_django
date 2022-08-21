@@ -422,7 +422,6 @@ section {
 }
 
 .contact .php-email-form .error-message {
-  display: none;
   color: #fff;
   background: #ed3c0d;
   text-align: center;
@@ -431,7 +430,6 @@ section {
 }
 
 .contact .php-email-form .sent-message {
-  display: none;
   color: #fff;
   background: #18d26e;
   text-align: center;
@@ -543,4 +541,24 @@ section {
 
 #footer .credits a {
   color: #ff3333;
+}
+
+/*--------------------------------------------------------------
+# Customized
+--------------------------------------------------------------*/
+
+.error-message {
+  color: #fff;
+  background: #ed3c0d;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.sent-message {
+  color: #fff;
+  background: #18d26e;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
 }
