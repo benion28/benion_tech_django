@@ -134,7 +134,7 @@ def users_table(request):
                     'message': message
                 })
             else:
-                error = 'User deleted successfully'
+                error = 'Delete user failed'
                 return render(request, 'users-table.html', {
                     'users': users,
                     'total_users': len(users),

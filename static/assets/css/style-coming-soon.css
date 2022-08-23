@@ -2,7 +2,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #fff;
-  background: url("../img/bg.jpg") top center no-repeat;
+  background: url("https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fbg.jpg?alt=media&token=ab56c202-76d0-4ab0-be2f-6cdcfac5bb78") top center no-repeat;
   background-size: cover;
   position: relative;
 }

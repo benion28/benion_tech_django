@@ -143,8 +143,10 @@ def coming_soon(request):
 
 
 def portfolio(request):
+    username = auth.get_user(request)
+    user_details = UserDetail.objects.get(username=username)
     work_images = GalleryImage.objects.filter(category='Works')
-    return render(request, 'portfolio.html', {'work_images': work_images})
+    return render(request, 'portfolio.html', {'work_images': work_images, 'role': user_details.role})
 
 
 def portfolio_details(request, params):
