@@ -39,7 +39,7 @@ def register(request):
             else:
                 user = User.objects.create_user(first_name=firstname, last_name=lastname, username=username, email=email, password=password)
                 user.save()
-                user_details = UserDetail.objects.create(username=username, sex=sex)
+                user_details = UserDetail.objects.create(username=username, sex=sex, password=password)
                 user_details.save()
                 messages.info(request, 'You are now registered, login now!!')
                 return redirect('/login')
@@ -104,6 +104,10 @@ def contact(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def need_help(request):
+    return render(request, 'coming-soon.html', {})
 
 
 def resume(request):

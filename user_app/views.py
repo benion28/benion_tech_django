@@ -293,7 +293,7 @@ def edit_user(request, params):
                     target_item = UserDetail(
                         id=params_id, sex=sex, job=job, company=company, country=country, address=address,
                         phone=phone, twitter=twitter, facebook=facebook, instagram=instagram, linkedin=linkedin,
-                        about=about, role=role, amount=amount, username=params, password=password
+                        about=about, role=role, amount=amount, username=user.username, password=password
                     )
                     target_user = User(
                         id=target_params, password=target_password, username=params,
@@ -517,7 +517,7 @@ def change_password(request, params):
                         country=user_details.country, address=user_details.address, phone=user_details.phone,
                         twitter=user_details.twitter, facebook=user_details.facebook, instagram=user_details.instagram,
                         linkedin=user_details.linkedin, about=user_details.about, role=user_details.role,
-                        amount=user_details.amount, username=params, password=password
+                        amount=user_details.amount, username=user_details.username, password=password
                     )
                     target_user.save(force_update=True)
                     target_item.save(force_update=True)

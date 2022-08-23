@@ -36,6 +36,7 @@ urlpatterns = [
     path('portfolio', views.portfolio, name='portfolio'),
     path('portfolio/details/<str:params>', views.portfolio_details, name='portfolio-details'),
     path('about', views.about, name='about'),
+    path('need-help', views.need_help, name='need-help'),
     path('coming-soon', views.coming_soon, name='coming-soon'),
     path('users/users-table/', user_app_view.users_table, name='users'),
     path('users/cbt-users-table/', user_app_view.cbt_users_table, name='cbt-users-tables'),

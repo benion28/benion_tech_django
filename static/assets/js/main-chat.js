@@ -8,6 +8,9 @@ userMessageForm.addEventListener("submit", (event) => {
     // Prevent Default Submission
     event.preventDefault()
 
+    // Form Data
+    let data = new FormData()
+
     // Get Text Inputs
     const message = event.target['message'].value
     const room = event.target['room'].value
@@ -15,26 +18,31 @@ userMessageForm.addEventListener("submit", (event) => {
     const reciever = event.target['reciever'].value
     const csrfmiddlewaretoken = event.target['csrfmiddlewaretoken'].value
 
-    data = {
+    // Append Form Data
+    data.append('message', message)
+    data.append('room', room)
+    data.append('sender', sender)
+    data.append('reciever', reciever)
+    data.append('csrfmiddlewaretoken', message)
+
+    form_data = {
         message,
         room,
         sender,
         reciever,
         csrfmiddlewaretoken
     }
-    payload = JSON.stringify(data)
+    payload = JSON.stringify(form_data)
 
-    console.log("Ajax Recieved The Data", data)
+    console.log("Ajax Recieved The Data", form_data)
     console.log("Ajax Recieved The Payload", payload)
 
     //    ajax.setRequestHeader('Content-Type', 'application/json')
     //    ajax.send(JSON.stringify(data)
 
     ajax.open('POST', '/send-message', payload)
-    ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    ajax.send(
-        `csrfmiddlewaretoken=${encodeURIComponent(csrfmiddlewaretoken)}`
-    )
+    ajax.setRequestHeader('Content-Type', 'application/json')
+    ajax.send(data)
 
     // Clear Input
     event.target.elements.message.value = ""
