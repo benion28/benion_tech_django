@@ -27,7 +27,7 @@
 
 			<h1 class="logo me-auto me-lg-0"><a href="/"> Benion-Tech</a></h1>
 			<!-- Uncomment below if you prefer to use an image logo -->
-			 <a href="/" class="logo"><img src="{% static 'assets/img/benion-tech-logo.png' %}" alt="" class="img-fluid"></a>
+			 <a href="/" class="logo"><img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fbenion-tech-logo.png?alt=media&token=4f1d2f0f-6124-44ed-b0de-9fb513379d03" alt="" class="img-fluid"></a>
 
 			<nav id="navbar" class="navbar order-last order-lg-0">
 			  <ul>
@@ -97,42 +97,10 @@
 						<div class="position-relative">
 							<div class="chat-messages p-4">
 
-								{% for message in messages %}
-									{% if message.sender == sender.username and message.reciever == reciever.username  %}
-										<div class="chat-message-right mb-4">
-											<div>
-												<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="{{ sender.first_name }} {{ sender.last_name }}" width="40" height="40">
-											</div>
-											<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-												<div class="font-weight-bold mb-1 text-right">{{ sender.first_name }} {{ sender.last_name }}</div>
-												<div class="text-primary mb-1 text-right"><i>You ({{ sender.username }})</i></div>
-												<p id="sender-message" class="text-primary">{{ message.value }}</p>
-												<div class="text-muted small text-nowrap mt-2">{{ message.date }}</div>
-											</div>
-										</div>
-									{% endif %}
-
-
-									{% if message.sender == reciever.username and message.reciever == sender.username %}
-										<div class="chat-message-left pb-4">
-											<div>
-												<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="{{ user.first_name }} {{ user.last_name }}" width="40" height="40">
-											</div>
-											<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-												<div class="font-weight-bold mb-1">{{ reciever.first_name }} {{ reciever.last_name }}</div>
-												<div class="text-success mb-1"><i>({{ reciever.username }})</i></div>
-												<p id="reciever-message" class="text-success">{{ message.value }}</p>
-												<div class="text-muted small text-nowrap mt-2">{{ message.date }}</div>
-											</div>
-										</div>
-									{% endif %}
-
-								{% endfor %}
-
 								{% if total_messages == 0  %}
 									<div class="chat-message-left pb-4">
 										<div>
-											<img src="{% static 'assets/img/benion-tech-logo.png' %}" class="rounded-circle mr-1" alt="{{ bot }}" width="40" height="40">
+											<img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fbenion-tech-logo.png?alt=media&token=4f1d2f0f-6124-44ed-b0de-9fb513379d03" class="rounded-circle mr-1" alt="{{ bot }}" width="40" height="40">
 										</div>
 										<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
 											<div class="font-weight-bold mb-1">{{ bot }}</div>
@@ -144,7 +112,7 @@
 								{% else %}
 									<div class="chat-message-left pb-4">
 										<div>
-											<img src="{% static 'assets/img/benion-tech-logo.png' %}" class="rounded-circle mr-1" alt="{{ bot }}" width="40" height="40">
+											<img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fbenion-tech-logo.png?alt=media&token=4f1d2f0f-6124-44ed-b0de-9fb513379d03" class="rounded-circle mr-1" alt="{{ bot }}" width="40" height="40">
 										</div>
 										<div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
 											<div class="font-weight-bold mb-1">{{ bot }}</div>
@@ -155,13 +123,19 @@
 									</div>
 								{% endif %}
 
+								<div class="messages"></div>
+
 							</div>
 						</div>
 
 						<form id="user-form">
-							<input hidden name="room" type="text" class="form-control" id="room" value="general">
+							<input hidden name="room" type="text" class="form-control" id="room" value="{{ room }}">
 							<input hidden name="sender" type="text" class="form-control" id="sender" value="{{ sender.username }}">
 							<input hidden name="reciever" type="text" class="form-control" id="reciever" value="{{ reciever.username }}">
+							<input hidden name="full-sender" type="text" class="form-control" id="full-sender" value="{{ sender.first_name }} {{ sender.last_name }}">
+							<input hidden name="full-reciever" type="text" class="form-control" id="full-reciever" value="{{ user.first_name }} {{ user.last_name }}">
+							<input hidden name="other-sender" type="text" class="form-control" id="other-sender" value="">
+							<input hidden name="csrf-token" type="text" class="form-control" id="csrf-token" value="{{ csrf_token }}">
 							{% csrf_token %}
 							<div class="input-group">
 								<input name="message" type="text" class="form-control" id="message" placeholder="Type your message">
@@ -178,6 +152,7 @@
 
 		<script src="{% static 'assets/js/jquery-1-10-2.min.js' %}"></script>
 		<script src="{% static 'assets/js/jquery-3-6-0.slim.min.js' %}"></script>
+		<script src="{% static 'assets/js/axios-0-27-2.min.js' %}"></script>
 		<script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
 		<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
 		<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth, User
 from user_app.models import UserDetail
 from .models import Room, Message
+from django.http import HttpResponse, JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 bot_name = 'Benion - Tech'
@@ -42,7 +45,8 @@ def chat_user(request, params):
                 'reciever': user_details,
                 'messages': messages,
                 'bot': bot,
-                'total_messages': len(messages)
+                'total_messages': len(messages),
+                'room': 'General'
             }
             return render(request, 'chat-user.html', data)
         else:
@@ -61,6 +65,7 @@ def chat_room(request, params):
         messages = Message.objects.filter(room=capitalize_room)
         data = {
             'sender': user,
+            'reciever': 'all',
             'room': capitalize_room,
             'bot': bot,
             'username': user.username,
@@ -75,20 +80,33 @@ def chat_room(request, params):
 
 
 def send_message(request):
-    reciever = request.POST['reciever']
     if request.method == 'POST':
         message = request.POST['message']
         room = request.POST['room']
         sender = request.POST['sender']
-
-        print("POST Data Recieved", {'message': message, 'room': room, 'sender': sender, 'reciever': reciever})
-
-        # new_message = Message.objects.create(value=message, room=room, sender=sender, reciever=reciever)
-        # new_message.save()
-        return redirect(f'/chat/user/{ reciever }')
+        reciever = request.POST['reciever']
+        new_message = Message.objects.create(value=message, room=room, sender=sender, reciever=reciever)
+        new_message.save()
+        HttpResponse(status=200)
+        if reciever == 'all':
+            return redirect(f'/chat/room/{ room }')
+        else:
+            return redirect(f'/chat/user/{ reciever }')
     else:
-        return redirect(f'/chat/user/{reciever}')
-        print("GET Data Recieved")
+        return redirect('/chat')
 
 
+class GetMessages(APIView):
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            room = request.POST['room']
+            reciever = request.POST['reciever']
+            if reciever == 'all':
+                messages = Message.objects.filter(room=room, reciever=reciever)
+                return Response(list(messages.values()))
+            else:
+                messages = Message.objects.filter(room=room)
+                return Response(list(messages.values()))
+        else:
+            return redirect('/chat')
 

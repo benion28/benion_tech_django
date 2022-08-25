@@ -5,6 +5,11 @@ from django.contrib.auth.hashers import make_password
 from .models import UserDetail, CbtUser, CbtExam, ExamScore, ContactMessage, GalleryImage
 import json
 import urllib.request
+from benion_tech_django.settings import env
+from benion_tech_django.helpers.exams import get_exams
+from benion_tech_django.helpers.cbt_users import get_cbt_users
+from benion_tech_django.helpers.scores import get_scores
+from benion_tech_django.helpers.messages import get_messages
 
 
 base_url = 'https://benion-tech-server.herokuapp.com'
@@ -154,6 +159,8 @@ def cbt_users_table(request):
     else:
         username = auth.get_user(request)
         all_cbt_users = CbtUser.objects.all()
+        if env('PRODUCTION'):
+            all_cbt_users = get_cbt_users()
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
             data = {
@@ -171,6 +178,8 @@ def exams_table(request):
         return redirect('/login')
     else:
         all_exams = CbtExam.objects.all()
+        if env('PRODUCTION'):
+            all_exams = get_exams()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -189,6 +198,8 @@ def scores_table(request):
         return redirect('/login')
     else:
         all_scores = ExamScore.objects.all()
+        if env('PRODUCTION'):
+            all_scores = get_scores()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -207,6 +218,8 @@ def messages_table(request):
         return redirect('/login')
     else:
         all_messages = ContactMessage.objects.all()
+        if env('PRODUCTION'):
+            all_messages = get_messages()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -412,7 +425,6 @@ def scores(request):
             for score in all_scores:
                 current_score = ExamScore.objects.get(username=score['username'])
                 if not ExamScore.objects.filter(username=score['username']).exists():
-                    print(f"Save Score {all_scores.index(score)}: {score}")
                     a_score = ExamScore.objects.create(
                         fullname=score['fullname'], username=score['username'], className=score['className'],
                         comment=score['comment'], subject=score['subject'], grade=score['grade'], term=score['term'],
@@ -421,7 +433,6 @@ def scores(request):
                     )
                     a_score.save()
                 else:
-                    print(f"Update Score {all_scores.index(score)}: {score}")
                     a_score = ExamScore(
                         fullname=score['fullname'], username=score['username'], className=score['className'],
                         comment=score['comment'], subject=score['subject'], grade=score['grade'], term=score['term'],
