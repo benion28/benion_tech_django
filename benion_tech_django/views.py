@@ -10,10 +10,21 @@ base_url = 'https://benion-tech-server.herokuapp.com'
 headers = {'Content-Type': 'application/json'}
 message = ''
 error = ''
+categories = [
+    {'name': 'Entertainment', 'value': 'entertainment'}, {'name': 'Business', 'value': 'business'},
+    {'name': 'Culture', 'value': 'culture'}, {'name': 'Sport', 'value': 'sport'},
+    {'name': 'Food', 'value': 'food'}, {'name': 'Politics', 'value': 'politics'},
+    {'name': 'Technology', 'value': 'technology'}, {'name': 'Celebrity', 'value': 'celebrity'},
+    {'name': 'Travel', 'value': 'travel'}, {'name': 'Wildlife', 'value': 'wildlife'},
+    {'name': 'Programming', 'value': 'programming'}, {'name': 'Lifestyle', 'value': 'lifestyle'},
+]
 
 
 def home(request):
-    return render(request, 'coming-soon.html')
+    data = {
+        'categories': categories
+    }
+    return render(request, 'home.html', data)
 
 
 def register(request):
@@ -112,6 +123,34 @@ def need_help(request):
 
 def resume(request):
     return render(request, 'resume.html')
+
+
+def all_posts(request):
+    data = {
+        'categories': categories
+    }
+    return render(request, 'all-posts.html', data)
+
+
+def category_posts(request, params):
+    data = {
+        'categories': categories
+    }
+    return render(request, 'all-posts.html', data)
+
+
+def tag_posts(request, params):
+    data = {
+        'categories': categories
+    }
+    return render(request, 'all-posts.html', data)
+
+
+def single_post(request, params):
+    data = {
+        'categories': categories
+    }
+    return render(request, 'single-post.html', data)
 
 
 def not_found(request, exception):

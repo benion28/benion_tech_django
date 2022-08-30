@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from .models import UserDetail, CbtUser, CbtExam, ExamScore, ContactMessage, GalleryImage
+from practice_area.models import Post
 import json
 import urllib.request
 from benion_tech_django.settings import env
@@ -16,6 +17,7 @@ base_url = 'https://benion-tech-server.herokuapp.com'
 message = ''
 error = ''
 user_data = False
+production = env('PRODUCTION')
 
 
 # Create your views here.
@@ -31,6 +33,7 @@ def user_dashboard(request):
         total_scores = ExamScore.objects.all()
         total_contact_messages = ContactMessage.objects.all()
         total_images = GalleryImage.objects.all()
+        total_posts = Post.objects.all()
         data = {
             'user_details': user_details,
             'total_cbt_users': len(total_cbt_users),
@@ -38,7 +41,7 @@ def user_dashboard(request):
             'total_exams': len(total_exams),
             'total_scores': len(total_scores),
             'total_contact_messages': len(total_contact_messages),
-            'total_images': len(total_images)
+            'total_posts': len(total_posts)
         }
         return render(request, 'user-dashboard.html', data)
 
@@ -159,7 +162,7 @@ def cbt_users_table(request):
     else:
         username = auth.get_user(request)
         all_cbt_users = CbtUser.objects.all()
-        if env('PRODUCTION'):
+        if production:
             all_cbt_users = get_cbt_users()
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -178,7 +181,7 @@ def exams_table(request):
         return redirect('/login')
     else:
         all_exams = CbtExam.objects.all()
-        if env('PRODUCTION'):
+        if production:
             all_exams = get_exams()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
@@ -198,7 +201,7 @@ def scores_table(request):
         return redirect('/login')
     else:
         all_scores = ExamScore.objects.all()
-        if env('PRODUCTION'):
+        if production:
             all_scores = get_scores()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
@@ -218,7 +221,7 @@ def messages_table(request):
         return redirect('/login')
     else:
         all_messages = ContactMessage.objects.all()
-        if env('PRODUCTION'):
+        if production:
             all_messages = get_messages()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
@@ -499,6 +502,37 @@ def images(request):
                         link=image['link'], tag=image['tag'], key=image['$key'], id=current_image.id
                     )
                     an_image.save(force_update=True)
+            return redirect('/user/dashboard')
+        else:
+            return redirect('/user/dashboard')
+
+
+def posts(request):
+    if str(auth.get_user(request)) == 'AnonymousUser':
+        return redirect('/login')
+    else:
+        username = auth.get_user(request)
+        user_details = Post.objects.get(username=username)
+        if user_details.role == 'admin':
+            response = urllib.request.urlopen(f'{base_url}/benion-users/api/all-posts').read()
+            json_data = json.loads(response)
+            all_posts = json_data['data'][3]
+            for post in all_posts:
+                current_post = Post.objects.get(key=post['$key'])
+                if not Post.objects.filter(key=post['$key']).exists():
+                    a_post = Post.objects.create(
+                        caption=post['caption'], category=post['category'], image=post['image'],
+                        title=post['title'], content=post['content'], tag=post['tag'], key=post['$key'],
+                        creator=post['creator'], date=post['date']
+                    )
+                    a_post.save()
+                else:
+                    a_post = Post(
+                        caption=post['caption'], category=post['category'], image=post['image'],
+                        title=post['title'], content=post['content'], tag=post['tag'], key=post['$key'],
+                        creator=post['creator'], date=post['date'], id=current_post.id
+                    )
+                    a_post.save(force_update=True)
             return redirect('/user/dashboard')
         else:
             return redirect('/user/dashboard')

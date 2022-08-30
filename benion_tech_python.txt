@@ -128,3 +128,13 @@ https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion
 user.png
 https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fuser.png?alt=media&token=4d9c743f-3105-42f9-9d93-c800ec0c92c4
 
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-48PG2T94RJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-48PG2T94RJ');
+</script>
