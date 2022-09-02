@@ -167,8 +167,6 @@ def cbt_users_table(request):
     else:
         username = auth.get_user(request)
         all_cbt_users = get_cbt_users()
-        if production:
-            all_cbt_users = get_cbt_users()
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
             data = {
@@ -186,8 +184,6 @@ def exams_table(request):
         return redirect('/login')
     else:
         all_exams = get_exams()
-        if production:
-            all_exams = get_exams()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -206,8 +202,6 @@ def scores_table(request):
         return redirect('/login')
     else:
         all_scores = get_scores()
-        if production:
-            all_scores = get_scores()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -226,8 +220,6 @@ def messages_table(request):
         return redirect('/login')
     else:
         all_messages = get_messages()
-        if production:
-            all_messages = get_messages()
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
@@ -357,9 +349,7 @@ def cbt_users(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/users').read()
-            json_data = json.loads(response)
-            users = json_data['data']['allCbtUsers']
+            users = get_cbt_users()
             for user in users:
                 if not CbtUser.objects.filter(username=user['username']).exists():
                     cbt_user = CbtUser.objects.create(
@@ -390,9 +380,7 @@ def exams(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/cbt-exam-data').read()
-            json_data = json.loads(response)
-            all_exams = json_data['data'][3]
+            all_exams = get_exams()
             for exam in all_exams:
                 current_cbt_user = CbtUser.objects.get(username=exam['username'])
                 class_name = exam['className'] or ''
@@ -426,9 +414,7 @@ def scores(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/cbt-scores').read()
-            json_data = json.loads(response)
-            all_scores = json_data['data'][3]
+            all_scores = get_scores()
             for score in all_scores:
                 if not ExamScore.objects.filter(username=score['username']).exists():
                     a_score = ExamScore.objects.create(
@@ -460,9 +446,7 @@ def messages(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-users/api/contact-messages').read()
-            json_data = json.loads(response)
-            all_messages = json_data['data'][3]
+            all_messages = get_messages()
             for message in all_messages:
                 if not ContactMessage.objects.filter(key=message['$key']).exists():
                     a_message = ContactMessage.objects.create(
@@ -489,9 +473,7 @@ def images(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-users/api/all-images').read()
-            json_data = json.loads(response)
-            all_images = json_data['data'][3]
+            all_images = get_images()
             for image in all_images:
                 if not GalleryImage.objects.filter(key=image['$key']).exists():
                     an_image = GalleryImage.objects.create(
@@ -518,10 +500,7 @@ def posts(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-news/api/all-posts').read()
-            json_data = json.loads(response)
-            all_posts = json_data['data'][3]
-            print("All Posts", all_posts)
+            all_posts = get_posts()
             for post in all_posts:
                 if not Post.objects.filter(key=post['$key']).exists():
                     a_post = Post.objects.create(

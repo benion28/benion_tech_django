@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 import json
 from django.contrib import messages
-from user_app.models import UserDetail, GalleryImage
+from user_app.models import UserDetail
+from benion_tech_django.settings import env
 from benion_tech_django.helpers.images import category_images, single_image
 from benion_tech_django.helpers.posts import get_posts, category_filter_posts, filter_posts, get_post
 from django.http import HttpResponse
@@ -20,6 +21,7 @@ categories = [
     {'name': 'Travel', 'value': 'travel'}, {'name': 'Wildlife', 'value': 'wildlife'},
     {'name': 'Programming', 'value': 'programming'}, {'name': 'Lifestyle', 'value': 'lifestyle'},
 ]
+production = env('PRODUCTION') == 'True'
 
 
 def home(request):
@@ -247,8 +249,12 @@ def category_posts(request, params):
             news = news_posts
     items = []
     for post in posts:
-        if post.category == params or post.tag == params:
-            items.append(post)
+        if production:
+            if post["category"] == params or post["tag"] == params:
+                items.append(post)
+            else:
+                if post.category == params or post.tag == params:
+                    items.append(post)
     data = {
         'posts': items,
         'other_posts': other_posts,
@@ -293,8 +299,12 @@ def tag_posts(request, params):
     items = []
     string = params.lower()
     for post in posts:
-        if post.title.lower().__contains__(string) or post.content.lower().__contains__(string):
-            items.append(post)
+        if production:
+            if post["title"].lower().__contains__(string) or post["content"].lower().__contains__(string):
+                items.append(post)
+            else:
+                if post.title.lower().__contains__(string) or post.content.lower().__contains__(string):
+                    items.append(post)
     data = {
         'posts': items,
         'other_posts': other_posts,
