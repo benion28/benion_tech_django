@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load post_tags %}
 <html lang="en">
 
 <head>
@@ -80,10 +81,12 @@
 
         <!-- ======= Search Form ======= -->
         <div class="search-form-wrap js-search-form-wrap">
-          <form action="search-result.html" class="search-form">
+          <form action="/posts/tag/" method="post" class="search-form">
+            {% csrf_token %}
             <span class="icon bi-search"></span>
-            <input type="text" placeholder="Search" class="form-control">
+            <input type="text" name="keyword" placeholder="Search" class="form-control">
             <button class="btn js-search-close"><span class="bi-x"></span></button>
+            <input type="submit" class="form-control bg-warning text-success">
           </form>
         </div><!-- End Search Form -->
 
@@ -101,103 +104,69 @@
         <div class="row">
           <div class="col-md-9">
 
-            <div class="d-md-flex post-entry-2 small-img">
-              <a href="single-post.html" class="me-4 thumbnail">
-                <img src="{% static 'assets/img/mkdgc.jpg' %}" alt="" class="img-fluid">
-              </a>
-              <div>
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{% static 'assets/img/lordvin.jpg' %}" alt="" class="img-fluid"></div>
-                  <div class="name">
-                    <h3 class="m-0 p-0">Victor Nwabudike</h3>
-                  </div>
+            <hr>
+             <p class="text-center text-bold"><b>SPORTS UPDATES </b><a href="/posts/category/sport" class="footer-link-more"><b><i>(Show More....)</i></b></a></p>
+              <hr>
+            {% for post in sports %}
+              <div class="d-md-flex post-entry-2 small-img">
+                <a href="/post/{{ post.title }}" class="me-4 thumbnail">
+                  <img src="{{ post.image }}" alt="" class="img-fluid">
+                </a>
+                <div>
+                  <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                  <h3><a href="/post/{{ post.title }}">{{ post.title }}</a></h3>
+                  <p>{{ post.content | truncate_text }}</p>
                 </div>
               </div>
-            </div>
+            {% endfor %}
 
-            <div class="d-md-flex post-entry-2 small-img">
-              <a href="single-post.html" class="me-4 thumbnail">
-                <img src="{% static 'assets/img/ronaldinho.jpg' %}" alt="" class="img-fluid">
-              </a>
-              <div>
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                <h3><a href="single-post.html">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{% static 'assets/img/blespretty.jpg' %}" alt="" class="img-fluid"></div>
-                  <div class="name">
-                    <h3 class="m-0 p-0">Blessing Abbas</h3>
-                  </div>
+            <hr>
+             <p class="text-center text-bold"><b>TECHNOLOGY UPDATES </b><a href="/posts/category/technology" class="footer-link-more"><b><i>(Show More....)</i></b></a></p>
+              <hr>
+            {% for post in technology %}
+              <div class="d-md-flex post-entry-2 small-img">
+                <a href="/post/{{ post.title }}" class="me-4 thumbnail">
+                  <img src="{{ post.image }}" alt="" class="img-fluid">
+                </a>
+                <div>
+                  <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                  <h3><a href="/post/{{ post.title }}">{{ post.title }}</a></h3>
+                  <p>{{ post.content | truncate_text }}</p>
                 </div>
               </div>
-            </div>
+            {% endfor %}
 
-            <div class="d-md-flex post-entry-2 small-img">
-              <a href="single-post.html" class="me-4 thumbnail">
-                <img src="{% static 'assets/img/story.jpg' %}" alt="" class="img-fluid">
-              </a>
-              <div>
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                <h3><a href="single-post.html">The Best Homemade Masks for Face (keep the Pimples Away)</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{% static 'assets/img/bleyoyo.jpg' %}" alt="" class="img-fluid"></div>
-                  <div class="name">
-                    <h3 class="m-0 p-0">Blessing Linus</h3>
-                  </div>
+            <hr>
+             <p class="text-center text-bold"><b>POLITICS UPDATES </b><a href="/posts/category/politics" class="footer-link-more"><b><i>(Show More....)</i></b></a></p>
+              <hr>
+            {% for post in politics %}
+              <div class="d-md-flex post-entry-2 small-img">
+                <a href="/post/{{ post.title }}" class="me-4 thumbnail">
+                  <img src="{{ post.image }}" alt="" class="img-fluid">
+                </a>
+                <div>
+                  <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                  <h3><a href="/post/{{ post.title }}">{{ post.title }}</a></h3>
+                  <p>{{ post.content | truncate_text }}</p>
                 </div>
               </div>
-            </div>
+            {% endfor %}
 
-            <div class="d-md-flex post-entry-2 small-img">
-              <a href="single-post.html" class="me-4 thumbnail">
-                <img src="{% static 'assets/img/teenwolf.jpg' %}" alt="" class="img-fluid">
-              </a>
-              <div>
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                <h3><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{% static 'assets/img/ibro.jpg' %}" alt="" class="img-fluid"></div>
-                  <div class="name">
-                    <h3 class="m-0 p-0">Ibrahim Yahaya</h3>
-                  </div>
+            <hr>
+             <p class="text-center text-bold"><b>OTHER UPDATES </b><a href="/posts/category/others" class="footer-link-more"><b><i>(Show More....)</i></b></a></p>
+              <hr>
+            {% for post in any_other %}
+              <div class="d-md-flex post-entry-2 small-img">
+                <a href="/post/{{ post.title }}" class="me-4 thumbnail">
+                  <img src="{{ post.image }}" alt="" class="img-fluid">
+                </a>
+                <div>
+                  <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                  <h3><a href="/post/{{ post.title }}">{{ post.title }}</a></h3>
+                  <p>{{ post.content | truncate_text }}</p>
                 </div>
               </div>
-            </div>
-
-            <div class="d-md-flex post-entry-2 small-img">
-              <a href="single-post.html" class="me-4 thumbnail">
-                <img src="{% static 'assets/img/uamshot.jpg' %}" alt="" class="img-fluid">
-              </a>
-              <div>
-                <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                <h3><a href="single-post.html">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
-                <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{% static 'assets/img/mimi.jpg' %}" alt="" class="img-fluid"></div>
-                  <div class="name">
-                    <h3 class="m-0 p-0">Faith Iorver</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Paging -->
-            <div class="text-start py-4">
-              <div class="custom-pagination">
-                <a href="#" class="prev">Prevous</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#" class="next">Next</a>
-              </div>
-            </div><!-- End Paging -->
+            {% endfor %}
 
           </div>
 
@@ -219,122 +188,38 @@
 
               <div class="tab-content" id="pills-tabContent">
 
-                <!-- Popular -->
+                <!-- News -->
                 <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
+                  {% for post in news %}
+                    <div class="post-entry-1 border-bottom">
+                      <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                      <h2 class="mb-2"><a href="/post/{{ post.title }}">{{ post.title }}</a></h2>
+                      <span class="author mb-3 d-block">{{ post.creator | get_name }}</span>
+                    </div>
+                  {% endfor %}
+                </div> <!-- End News -->
 
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-                </div> <!-- End Popular -->
-
-                <!-- Trending -->
+                <!-- Blog -->
                 <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
+                  {% for post in blog %}
+                    <div class="post-entry-1 border-bottom">
+                      <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                      <h2 class="mb-2"><a href="/post/{{ post.title }}">{{ post.title }}</a></h2>
+                      <span class="author mb-3 d-block">{{ post.creator | get_name }}</span>
+                    </div>
+                  {% endfor %}
+                </div> <!-- End Blog -->
 
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-                </div> <!-- End Trending -->
-
-                <!-- Latest -->
+                <!-- Others -->
                 <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                  <div class="post-entry-1 border-bottom">
-                    <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2>
-                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                  </div>
-
-                </div> <!-- End Latest -->
+                  {% for post in others %}
+                    <div class="post-entry-1 border-bottom">
+                      <div class="post-meta"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                      <h2 class="mb-2"><a href="/post/{{ post.title }}">{{ post.title }}</a></h2>
+                      <span class="author mb-3 d-block">{{ post.creator | get_name }}</span>
+                    </div>
+                  {% endfor %}
+                </div> <!-- End Others -->
 
                 <p class="text-center"><a href="/posts" class="footer-link-more"><b><i>Show More....</i></b></a></p>
                 <hr>
@@ -345,12 +230,30 @@
             <div class="aside-block">
               <h3 class="aside-title">Video</h3>
               <div class="video-post">
-                <a href="https://www.youtube.com/watch?v=AiFfDjmd0jU" class="glightbox link-video">
+                <a href="https://www.youtube.com/watch?v=Lwbe0KcEq4A&t=1s" class="glightbox link-video">
                   <span class="bi-play-fill"></span>
-                  <img src="{% static 'assets/img/bg.jpg' %}" alt="" class="img-fluid">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fbg.jpg?alt=media&token=ab56c202-76d0-4ab0-be2f-6cdcfac5bb78" alt="" class="img-fluid">
                 </a>
               </div>
             </div><!-- End Video -->
+
+            <div class="aside-block">
+              <h3 class="aside-title">Categories</h3>
+              <ul class="aside-links list-unstyled">
+                {% for category in categories %}
+                  <li><a href="/posts/category/{{ category.value }}"><i class="bi bi-chevron-right"></i>{{ category.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div><!-- End Categories -->
+
+            <div class="aside-block">
+              <h3 class="aside-title">Tags</h3>
+              <ul class="aside-tags list-unstyled">
+                {% for category in categories %}
+                  <li><a href="/posts/tag/{{ category.value }}">{{ category.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div><!-- End Tags -->
 
           </div>
 
@@ -404,45 +307,17 @@
             <h3 class="footer-heading">Recent Posts</h3>
 
             <ul class="footer-links footer-blog-entry list-unstyled">
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="{% static 'assets/img/ronaldinho.jpg' %}" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>5 Great Startup Tips for Female Founders</span>
-                  </div>
-                </a>
-              </li>
-
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="{% static 'assets/img/mkdgc.jpg' %}" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>What is the son of Football Coach John Gruden, Deuce Gruden doing Now?</span>
-                  </div>
-                </a>
-              </li>
-
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="{% static 'assets/img/teenwolf.jpg' %}" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>Life Insurance And Pregnancy: A Working Mom’s Guide</span>
-                  </div>
-                </a>
-              </li>
-
-              <li>
-                <a href="single-post.html" class="d-flex align-items-center">
-                  <img src="{% static 'assets/img/uamshot.jpg' %}" alt="" class="img-fluid me-3">
-                  <div>
-                    <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                    <span>How to Avoid Distraction and Stay Focused During Video Calls?</span>
-                  </div>
-                </a>
-              </li>
+              {% for post in other_posts %}
+                <li>
+                  <a href="/post/{{ post.title }}" class="d-flex align-items-center">
+                    <img src="{{ post.image }}" alt="" class="img-fluid me-3">
+                    <div>
+                      <div class="post-meta d-block"><span class="date">{{ post.tag }}</span> <span class="mx-1">&bullet;</span> <span>{{ post.date }}</span></div>
+                      <span>{{ post.title }}</span>
+                    </div>
+                  </a>
+                </li>
+              {% endfor %}
 
             </ul>
 

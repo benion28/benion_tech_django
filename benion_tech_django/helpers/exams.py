@@ -1,7 +1,10 @@
 import json
 import urllib.request
+from benion_tech_django.settings import env
+from user_app.models import CbtExam
 
 base_url = 'https://benion-tech-server.herokuapp.com'
+production = env('PRODUCTION') == 'True'
 data = [
     {
         "answered": "-N7cXebPI_vUQ5_-bt9P,-N7cXY3LFBnmLaRC2YBw,-N7cXLgMjsibdTU0fV43,-N7cXDiKaCqvu0hC31f4,-N7cX4LlKlQ3hQzbjlpe,-N7cWzBQN7c9nJiYdF7t,-N7cTGP8AmROmR76crvX,-N7cT-Fz4HTV-uoWfpHy,-N7cSmvH6EU7hhtTWD-9,-N7cSVRxbsSWiPL63LTq,-N7cSKAl5ndQX5h7ukp0,-N7cR2F2GcSKROLYbB71,-N7cQs_4MwFsa6A-pktk,-N7cQWLW3ANEZFcYuhVi,-N7cQKqbnVBtWfBC5BEL,-N7cNx0VDiu8PV6dmaEN,-N7cNPW1cewHZScH9QLl,-N7cN7nCi12xrjHmmWej,-N7cLjZWnD8efXLI4ERA",
@@ -509,7 +512,13 @@ data = [
 
 
 def get_exams():
-    response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/cbt-exam-data').read()
-    json_data = json.loads(response)
-    all_exams = json_data['data'][3]
+    items = CbtExam.objects.all()
+    exams = []
+    for item in items:
+        exams.append(item)
+    all_exams = exams
+    if production:
+        response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/cbt-exam-data').read()
+        json_data = json.loads(response)
+        all_exams = json_data['data'][3]
     return all_exams

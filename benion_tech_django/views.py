@@ -3,6 +3,8 @@ from django.contrib.auth.models import User, auth
 import json
 from django.contrib import messages
 from user_app.models import UserDetail, GalleryImage
+from benion_tech_django.helpers.images import category_images, single_image
+from benion_tech_django.helpers.posts import get_posts, category_filter_posts, filter_posts, get_post
 from django.http import HttpResponse
 import urllib.request
 
@@ -21,8 +23,62 @@ categories = [
 
 
 def home(request):
+    posts = get_posts()
+    blog_posts = category_filter_posts(posts, "blog")
+    news_posts = category_filter_posts(posts, "news")
+    others_posts = category_filter_posts(posts, "others")
+    sports_posts = filter_posts(posts, "sport")
+    politics_posts = filter_posts(posts, "politics")
+    technology_posts = filter_posts(posts, "technology")
+    any_other_post = filter_posts(posts, "others")
+    other_posts = []
+    blog = []
+    news = []
+    others = []
+    sports = []
+    politics = []
+    technology = []
+    any_other = []
+    for index in range(5):
+        if len(posts) > 5:
+            other_posts.append(posts[index])
+        else:
+            other_posts = posts
+        if len(blog_posts) > 5:
+            blog.append(blog_posts[index])
+        else:
+            blog = blog_posts
+        if len(others_posts) > 5:
+            others.append(others_posts[index])
+        else:
+            others = others_posts
+        if len(news_posts) > 5:
+            news.append(news_posts[index])
+        else:
+            news = news_posts
+    for index in range(3):
+        if len(sports_posts) > 3:
+            sports.append(sports_posts[index])
+        else:
+            sports = sports_posts
+        if len(politics_posts) > 3:
+            politics.append(politics_posts[index])
+        else:
+            politics = politics_posts
+        if len(technology_posts) > 3:
+            technology.append(technology_posts[index])
+        else:
+            technology = technology_posts
+        if len(any_other_post) > 3:
+            any_other.append(any_other_post[index])
+        else:
+            any_other = any_other_post
     data = {
-        'categories': categories
+        'other_posts': other_posts,
+        'categories': categories, 'politics': politics,
+        'others': others, 'any_other': any_other,
+        'blog': blog, 'technology': technology,
+        'news': news, 'sports': sports
     }
     return render(request, 'home.html', data)
 
@@ -126,31 +182,178 @@ def resume(request):
 
 
 def all_posts(request):
+    posts = get_posts()
+    blog_posts = category_filter_posts(posts, "blog")
+    news_posts = category_filter_posts(posts, "news")
+    others_posts = category_filter_posts(posts, "others")
+    other_posts = []
+    blog = []
+    news = []
+    others = []
+    for index in range(5):
+        if len(posts) > 5:
+            other_posts.append(posts[index])
+        else:
+            other_posts = posts
+        if len(blog_posts) > 5:
+            blog.append(blog_posts[index])
+        else:
+            blog = blog_posts
+        if len(others_posts) > 5:
+            others.append(others_posts[index])
+        else:
+            others = others_posts
+        if len(news_posts) > 5:
+            news.append(news_posts[index])
+        else:
+            news = news_posts
     data = {
-        'categories': categories
+        'posts': posts,
+        'other_posts': other_posts,
+        'categories': categories,
+        'others': others,
+        'blog': blog,
+        'news': news,
+        'total': len(posts)
     }
     return render(request, 'all-posts.html', data)
 
 
 def category_posts(request, params):
+    posts = get_posts()
+    blog_posts = category_filter_posts(posts, "blog")
+    news_posts = category_filter_posts(posts, "news")
+    others_posts = category_filter_posts(posts, "others")
+    other_posts = []
+    blog = []
+    news = []
+    others = []
+    for index in range(5):
+        if len(posts) > 5:
+            other_posts.append(posts[index])
+        else:
+            other_posts = posts
+        if len(blog_posts) > 5:
+            blog.append(blog_posts[index])
+        else:
+            blog = blog_posts
+        if len(others_posts) > 5:
+            others.append(others_posts[index])
+        else:
+            others = others_posts
+        if len(news_posts) > 5:
+            news.append(news_posts[index])
+        else:
+            news = news_posts
+    items = []
+    for post in posts:
+        if post.category == params or post.tag == params:
+            items.append(post)
     data = {
-        'categories': categories
+        'posts': items,
+        'other_posts': other_posts,
+        'categories': categories,
+        'others': others,
+        'blog': blog,
+        'news': news,
+        'total': len(items)
     }
-    return render(request, 'all-posts.html', data)
+    if len(items) > 0:
+        return render(request, 'all-posts.html', data)
+    else:
+        return redirect('/')
 
 
 def tag_posts(request, params):
+    posts = get_posts()
+    blog_posts = category_filter_posts(posts, "blog")
+    news_posts = category_filter_posts(posts, "news")
+    others_posts = category_filter_posts(posts, "others")
+    other_posts = []
+    blog = []
+    news = []
+    others = []
+    for index in range(5):
+        if len(posts) > 5:
+            other_posts.append(posts[index])
+        else:
+            other_posts = posts
+        if len(blog_posts) > 5:
+            blog.append(blog_posts[index])
+        else:
+            blog = blog_posts
+        if len(others_posts) > 5:
+            others.append(others_posts[index])
+        else:
+            others = others_posts
+        if len(news_posts) > 5:
+            news.append(news_posts[index])
+        else:
+            news = news_posts
+    items = []
+    string = params.lower()
+    for post in posts:
+        if post.title.lower().__contains__(string) or post.content.lower().__contains__(string):
+            items.append(post)
     data = {
-        'categories': categories
+        'posts': items,
+        'other_posts': other_posts,
+        'categories': categories,
+        'others': others,
+        'blog': blog,
+        'news': news,
+        'total': len(items)
     }
-    return render(request, 'all-posts.html', data)
+    if len(items) > 0:
+        return render(request, 'all-posts.html', data)
+    else:
+        return redirect('/')
 
 
 def single_post(request, params):
+    posts = get_posts()
+    post = get_post(params)
+    blog_posts = category_filter_posts(posts, "blog")
+    news_posts = category_filter_posts(posts, "news")
+    others_posts = category_filter_posts(posts, "others")
+    other_posts = []
+    blog = []
+    news = []
+    others = []
+    for index in range(5):
+        if len(posts) > 5:
+            other_posts.append(posts[index])
+        else:
+            other_posts = posts
+        if len(blog_posts) > 5:
+            blog.append(blog_posts[index])
+        else:
+            blog = blog_posts
+        if len(others_posts) > 5:
+            others.append(others_posts[index])
+        else:
+            others = others_posts
+        if len(news_posts) > 5:
+            news.append(news_posts[index])
+        else:
+            news = news_posts
     data = {
-        'categories': categories
+        'post': post,
+        'other_posts': other_posts,
+        'categories': categories,
+        'others': others,
+        'blog': blog,
+        'news': news
     }
     return render(request, 'single-post.html', data)
+
+
+def tag_search(request):
+    if request.method == 'POST':
+        keyword = request.POST['keyword']
+        return redirect(f'/posts/tag/{keyword }')
+    else:
+        return redirect('/')
 
 
 def not_found(request, exception):
@@ -191,13 +394,13 @@ def portfolio(request):
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
         role = user_details.role
-    work_images = GalleryImage.objects.filter(category='Works')
+    work_images = category_images('Works')
     return render(request, 'portfolio.html', {'work_images': work_images, 'role': role})
 
 
 def portfolio_details(request, params):
-    image = GalleryImage.objects.get(id=params)
-    work_images = GalleryImage.objects.filter(category='Works')
+    image = single_image(params)
+    work_images = category_images('Works')
     return render(request, 'portfolio-details.html', {'image': image, 'work_images': work_images})
 
 

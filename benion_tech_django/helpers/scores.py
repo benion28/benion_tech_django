@@ -1,7 +1,10 @@
 import json
 import urllib.request
+from benion_tech_django.settings import env
+from user_app.models import ExamScore
 
 base_url = 'https://benion-tech-server.herokuapp.com'
+production = env('PRODUCTION') == 'True'
 data = [
     {
         "className": "sss-1",
@@ -1111,7 +1114,13 @@ data = [
 
 
 def get_scores():
-    response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/cbt-exam-data').read()
-    json_data = json.loads(response)
-    all_exams = json_data['data'][3]
+    items = ExamScore.objects.all()
+    scores = []
+    for item in items:
+        scores.append(item)
+    all_exams = scores
+    if production:
+        response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/cbt-exam-data').read()
+        json_data = json.loads(response)
+        all_exams = json_data['data'][3]
     return all_exams

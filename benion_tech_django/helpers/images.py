@@ -1,7 +1,10 @@
 import json
 import urllib.request
+from benion_tech_django.settings import env
+from user_app.models import GalleryImage
 
 base_url = 'https://benion-tech-server.herokuapp.com'
+production = env('PRODUCTION') == 'True'
 data = [
     {
         "caption": "benion-cryptoapp",
@@ -407,39 +410,52 @@ data = [
 
 
 def get_images():
-    response = urllib.request.urlopen(f'{base_url}/benion-users/api/all-images').read()
-    json_data = json.loads(response)
-    all_images = json_data['data'][3]
+    items = GalleryImage.objects.all()
+    images = []
+    for item in items:
+        images.append(item)
+    all_images = images
+    if production:
+        response = urllib.request.urlopen(f'{base_url}/benion-users/api/all-images').read()
+        json_data = json.loads(response)
+        all_images = json_data['data'][3]
     return all_images
 
 
-def get_test():
-    test_data = [
-        {
-            'id': 1,
-            'sex': 'female',
-            'name': 'Faith'
-        },
-        {
-            'id': 2,
-            'sex': 'male',
-            'name': 'Bernard'
-        },
-        {
-            'id': 3,
-            'sex': 'female',
-            'name': 'Blessing'
-        },
-        {
-            'id': 4,
-            'sex': 'male',
-            'name': 'Bemshima'
-        }
-    ]
-    filter_data = []
+def category_images(value):
+    images = get_images()
+    items = []
+    for image in images:
+        if production:
+            if image["category"] == value:
+                items.append(image)
+        else:
+            if image.category == value:
+                items.append(image)
+    return items
 
-    for item in test_data:
-        print('male' in item['sex'], item)
-        if 'male' == item['sex']:
-            filter_data.append(item)
-    return filter_data[0]
+
+def single_image_id(value):
+    images = get_images()
+    item = {}
+    for image in images:
+        if production:
+            if image["id"] == int(value):
+                item = image
+        else:
+            if image.id == int(value):
+                item = image
+    return item
+
+
+def single_image(value):
+    images = get_images()
+    item = {}
+    for image in images:
+        if production:
+            if image["caption"] == value:
+                item = image
+        else:
+            if image.caption == value:
+                item = image
+    return item

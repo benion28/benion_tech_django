@@ -38,6 +38,7 @@ urlpatterns = [
     path('posts', views.all_posts, name='all-posts'),
     path('posts/category/<str:params>', views.category_posts, name='category-posts'),
     path('posts/tag/<str:params>', views.tag_posts, name='tag-posts'),
+    path('posts/tag/', views.tag_search, name='tag-search'),
     path('post/<str:params>', views.single_post, name='single-post'),
     path('portfolio', views.portfolio, name='portfolio'),
     path('portfolio/details/<str:params>', views.portfolio_details, name='portfolio-details'),

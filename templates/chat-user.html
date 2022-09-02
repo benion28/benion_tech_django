@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load chat_tags %}
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -80,7 +81,7 @@
 						<div class="py-2 px-4 border-bottom d-none d-lg-block p-3">
 							<div class="d-flex align-items-center py-1 p-3">
 								<div class="position-relative">
-									<img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="{{ reciever.first_name }} {{ reciever.last_name }}" width="40" height="40">
+									<img src="{{ reciever.username | get_chat_profile }}" class="rounded-circle mr-1" alt="{{ reciever.first_name }} {{ reciever.last_name }}" width="40" height="40">
 								</div>
 								<div class="flex-grow-1 pl-3">
 									<strong>{{ reciever.first_name }} {{ reciever.last_name }}</strong> <span text-success><i>(online)</i></span>

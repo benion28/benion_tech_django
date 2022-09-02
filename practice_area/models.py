@@ -12,12 +12,13 @@ class DemoItem(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=50)
-    caption = models.CharField(max_length=50)
+    title = models.CharField(max_length=100)
+    caption = models.CharField(max_length=100)
     creator = models.CharField(max_length=20)
-    image = models.CharField(max_length=100)
+    image = models.CharField(max_length=150)
     date = models.DateTimeField(default=datetime.now, blank=True)
-    value = models.CharField(max_length=2000)
+    content = models.TextField(max_length=3000)
     category = models.CharField(max_length=15)
     tag = models.CharField(max_length=15)
+    key = models.CharField(max_length=30)
 

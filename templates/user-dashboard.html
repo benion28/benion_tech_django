@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load post_tags %}
 <html lang="en">
 
   <head>
@@ -746,36 +747,13 @@
                 <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
 
                 <div class="news">
-                  <div class="post-item clearfix">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fronaldinho.jpg?alt=media&token=e620880e-b8e5-4341-b7e6-b72fed881d05" alt="">
-                    <h4><a href="#">News Update One</a></h4>
-                    <p>This is the first news update by demo creation...</p>
-                  </div>
-
-                  <div class="post-item clearfix">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fstory.jpg?alt=media&token=d324bfc3-21d6-442e-814d-cedad85189a5" alt="">
-                    <h4><a href="#">News Update Two</a></h4>
-                    <p>This is the second news update by demo creation...</p>
-                  </div>
-
-                  <div class="post-item clearfix">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fmkdgc.jpg?alt=media&token=507d3bf6-c501-49ea-b481-3a6905c1a404" alt="">
-                    <h4><a href="#">News Update Three</a></h4>
-                    <p>This is the third news update by demo creation...</p>
-                  </div>
-
-                  <div class="post-item clearfix">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fuamshot.jpg?alt=media&token=317e0457-8482-411f-a33f-ce6e8254e0db" alt="">
-                    <h4><a href="#">News Update Four</a></h4>
-                    <p>This is the fourth news update by demo creation...</p>
-                  </div>
-
-                  <div class="post-item clearfix">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/benion-database.appspot.com/o/Benion%20Tech%2Fteenwolf.jpg?alt=media&token=1b49969b-6007-45ed-9bec-c01ff4ee2af6" alt="">
-                    <h4><a href="#">News Update Five</a></h4>
-                    <p>This is the fifth news update by demo creation...</p>
-                  </div>
-
+                  {% for post in news_posts %}
+                    <div class="post-item clearfix">
+                      <img src="{{ post.image }}" alt="">
+                      <h4><a href="/post/{{ post.title }}">{{ post.title }}</a></h4>
+                      <p>{{ post.content | reduce_text }}</p>
+                    </div>
+                  {% endfor %}
                 </div><!-- End sidebar recent posts-->
 
               </div>

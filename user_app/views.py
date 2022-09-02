@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
-from .models import UserDetail, CbtUser, CbtExam, ExamScore, ContactMessage, GalleryImage
+from .models import UserDetail, ExamScore, ContactMessage, GalleryImage, CbtExam, CbtUser
 from practice_area.models import Post
 import json
 import urllib.request
@@ -11,13 +11,15 @@ from benion_tech_django.helpers.exams import get_exams
 from benion_tech_django.helpers.cbt_users import get_cbt_users
 from benion_tech_django.helpers.scores import get_scores
 from benion_tech_django.helpers.messages import get_messages
+from benion_tech_django.helpers.images import get_images
+from benion_tech_django.helpers.posts import get_posts, category_filter_posts
 
 
 base_url = 'https://benion-tech-server.herokuapp.com'
-message = ''
-error = ''
+success_message = ''
+error_message = ''
 user_data = False
-production = env('PRODUCTION')
+production = env('PRODUCTION') == 'True'
 
 
 # Create your views here.
@@ -27,13 +29,14 @@ def user_dashboard(request):
     else:
         username = auth.get_user(request)
         user_details = UserDetail.objects.get(username=username)
-        total_cbt_users = CbtUser.objects.all()
+        total_cbt_users = get_cbt_users()
         total_users = User.objects.all()
-        total_exams = CbtExam.objects.all()
-        total_scores = ExamScore.objects.all()
-        total_contact_messages = ContactMessage.objects.all()
-        total_images = GalleryImage.objects.all()
-        total_posts = Post.objects.all()
+        total_exams = get_exams()
+        total_scores = get_scores()
+        total_contact_messages = get_messages()
+        total_images = get_images()
+        total_posts = get_posts()
+        news_posts = category_filter_posts(total_posts, "news")
         data = {
             'user_details': user_details,
             'total_cbt_users': len(total_cbt_users),
@@ -41,7 +44,9 @@ def user_dashboard(request):
             'total_exams': len(total_exams),
             'total_scores': len(total_scores),
             'total_contact_messages': len(total_contact_messages),
-            'total_posts': len(total_posts)
+            'total_posts': len(total_posts),
+            'total_images': len(total_images),
+            'news_posts': news_posts
         }
         return render(request, 'user-dashboard.html', data)
 
@@ -161,7 +166,7 @@ def cbt_users_table(request):
         return redirect('/login')
     else:
         username = auth.get_user(request)
-        all_cbt_users = CbtUser.objects.all()
+        all_cbt_users = get_cbt_users()
         if production:
             all_cbt_users = get_cbt_users()
         user_details = UserDetail.objects.get(username=username)
@@ -180,7 +185,7 @@ def exams_table(request):
     if str(auth.get_user(request)) == 'AnonymousUser':
         return redirect('/login')
     else:
-        all_exams = CbtExam.objects.all()
+        all_exams = get_exams()
         if production:
             all_exams = get_exams()
         username = auth.get_user(request)
@@ -200,7 +205,7 @@ def scores_table(request):
     if str(auth.get_user(request)) == 'AnonymousUser':
         return redirect('/login')
     else:
-        all_scores = ExamScore.objects.all()
+        all_scores = get_scores()
         if production:
             all_scores = get_scores()
         username = auth.get_user(request)
@@ -220,7 +225,7 @@ def messages_table(request):
     if str(auth.get_user(request)) == 'AnonymousUser':
         return redirect('/login')
     else:
-        all_messages = ContactMessage.objects.all()
+        all_messages = get_messages()
         if production:
             all_messages = get_messages()
         username = auth.get_user(request)
@@ -317,21 +322,21 @@ def edit_user(request, params):
                     )
                     target_user.save(force_update=True)
                     target_item.save(force_update=True)
-                    message = f'User {params} updated successfully'
+                    success_message = f'User {params} updated successfully'
                     return render(request, 'edit-user.html', {
                         'user_details': user_details,
                         'params_details': params_details,
                         'params': user,
-                        'message': message,
+                        'message': success_message,
                         'success': True
                     })
                 else:
-                    error = 'Target user not found'
+                    error_message = 'Target user not found'
                     return render(request, 'edit-user.html', {
                         'user_details': user_details,
                         'params_details': params_details,
                         'params': user,
-                        'error': error,
+                        'error': error_message,
                         'success': False
                     })
             else:
@@ -356,7 +361,6 @@ def cbt_users(request):
             json_data = json.loads(response)
             users = json_data['data']['allCbtUsers']
             for user in users:
-                current_user = CbtUser.objects.get(username=user['username'])
                 if not CbtUser.objects.filter(username=user['username']).exists():
                     cbt_user = CbtUser.objects.create(
                         _id=user['_id'], firstname=user['firstname'], lastname=user['lastname'],
@@ -366,6 +370,7 @@ def cbt_users(request):
                     )
                     cbt_user.save()
                 else:
+                    current_user = CbtUser.objects.get(username=user['username'])
                     cbt_user = CbtUser(
                         _id=user['_id'], firstname=user['firstname'], lastname=user['lastname'], id=current_user.id,
                         username=user['username'], className=user['className'], category=user['category'],
@@ -390,7 +395,6 @@ def exams(request):
             all_exams = json_data['data'][3]
             for exam in all_exams:
                 current_cbt_user = CbtUser.objects.get(username=exam['username'])
-                current_exam = CbtExam.objects.get(username=exam['username'])
                 class_name = exam['className'] or ''
                 if not CbtExam.objects.filter(username=exam['username']).exists():
                     print(f"Save Exam {all_exams.index(exam)}: {exam} # {class_name}")
@@ -402,7 +406,7 @@ def exams(request):
                     )
                     an_exam.save()
                 else:
-                    print(f"Update Exam {all_exams.index(exam)}: {exam} # {class_name}")
+                    current_exam = CbtExam.objects.get(username=exam['username'])
                     an_exam = CbtExam(
                         _id=exam['id'], firstname=current_cbt_user.firstname, lastname=current_cbt_user.lastname,
                         username=exam['username'], className=class_name or '', category=exam['category'],
@@ -426,7 +430,6 @@ def scores(request):
             json_data = json.loads(response)
             all_scores = json_data['data'][3]
             for score in all_scores:
-                current_score = ExamScore.objects.get(username=score['username'])
                 if not ExamScore.objects.filter(username=score['username']).exists():
                     a_score = ExamScore.objects.create(
                         fullname=score['fullname'], username=score['username'], className=score['className'],
@@ -436,6 +439,7 @@ def scores(request):
                     )
                     a_score.save()
                 else:
+                    current_score = ExamScore.objects.get(username=score['username'])
                     a_score = ExamScore(
                         fullname=score['fullname'], username=score['username'], className=score['className'],
                         comment=score['comment'], subject=score['subject'], grade=score['grade'], term=score['term'],
@@ -460,7 +464,6 @@ def messages(request):
             json_data = json.loads(response)
             all_messages = json_data['data'][3]
             for message in all_messages:
-                current_message = ContactMessage.objects.get(key=message['$key'])
                 if not ContactMessage.objects.filter(key=message['$key']).exists():
                     a_message = ContactMessage.objects.create(
                         fullname=message['fullname'], message=message['message'], email=message['email'],
@@ -468,6 +471,7 @@ def messages(request):
                     )
                     a_message.save()
                 else:
+                    current_message = ContactMessage.objects.get(key=message['$key'])
                     a_message = ContactMessage(
                         fullname=message['fullname'], message=message['message'], email=message['email'],
                         time=message['time'], date=message['date'], key=message['$key'], id=current_message.id
@@ -489,7 +493,6 @@ def images(request):
             json_data = json.loads(response)
             all_images = json_data['data'][3]
             for image in all_images:
-                current_image = GalleryImage.objects.get(key=image['$key'])
                 if not GalleryImage.objects.filter(key=image['$key']).exists():
                     an_image = GalleryImage.objects.create(
                         caption=image['caption'], category=image['category'], image=image['image'],
@@ -497,6 +500,7 @@ def images(request):
                     )
                     an_image.save()
                 else:
+                    current_image = GalleryImage.objects.get(key=image['$key'])
                     an_image = GalleryImage(
                         caption=image['caption'], category=image['category'], image=image['image'],
                         link=image['link'], tag=image['tag'], key=image['$key'], id=current_image.id
@@ -512,13 +516,13 @@ def posts(request):
         return redirect('/login')
     else:
         username = auth.get_user(request)
-        user_details = Post.objects.get(username=username)
+        user_details = UserDetail.objects.get(username=username)
         if user_details.role == 'admin':
-            response = urllib.request.urlopen(f'{base_url}/benion-users/api/all-posts').read()
+            response = urllib.request.urlopen(f'{base_url}/benion-news/api/all-posts').read()
             json_data = json.loads(response)
             all_posts = json_data['data'][3]
+            print("All Posts", all_posts)
             for post in all_posts:
-                current_post = Post.objects.get(key=post['$key'])
                 if not Post.objects.filter(key=post['$key']).exists():
                     a_post = Post.objects.create(
                         caption=post['caption'], category=post['category'], image=post['image'],
@@ -527,6 +531,7 @@ def posts(request):
                     )
                     a_post.save()
                 else:
+                    current_post = Post.objects.get(key=post['$key'])
                     a_post = Post(
                         caption=post['caption'], category=post['category'], image=post['image'],
                         title=post['title'], content=post['content'], tag=post['tag'], key=post['$key'],

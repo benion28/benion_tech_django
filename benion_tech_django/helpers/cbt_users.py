@@ -1,8 +1,11 @@
 import json
 import urllib.request
+from benion_tech_django.settings import env
+from user_app.models import CbtUser
 
 
 base_url = 'https://benion-tech-server.herokuapp.com'
+production = env('PRODUCTION') == 'True'
 data = [
     {
         "role": "admin",
@@ -776,7 +779,13 @@ data = [
 
 
 def get_cbt_users():
-    response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/users').read()
-    json_data = json.loads(response)
-    users = json_data['data']['allCbtUsers']
+    items = CbtUser.objects.all()
+    cbt_users = []
+    for item in items:
+        cbt_users.append(item)
+    users = cbt_users
+    if production:
+        response = urllib.request.urlopen(f'{base_url}/benion-cbt/api/users').read()
+        json_data = json.loads(response)
+        users = json_data['data']['allCbtUsers']
     return users

@@ -46,7 +46,7 @@
 
                   {% for image in work_images %}
                     <div class="swiper-slide">
-                      <a href="/portfolio/details/{{ image.id }}">
+                      <a href="/portfolio/details/{{ image.caption }}">
                         <img src="{{ image.image }}" alt="">
                       </a>
                     </div>
@@ -61,10 +61,10 @@
               <div class="portfolio-info">
                 <h3>Project information</h3>
                 <ul>
-                  <li><strong>Category</strong>: {{ image.category }}</li>
-                  <li><strong>Name</strong>: {{ image.caption }}</li>
-                  <li><strong>Tag</strong>: {{ image.tag }}</li>
-                  <li><strong>Project URL</strong>: <a href="{{ image.link }}">{{ image.link }}</a></li>
+                  <li><strong>Category:</strong>: {{ image.category }}</li>
+                  <li><strong>Name:</strong>: {{ image.caption }}</li>
+                  <li><strong>Tag:</strong>: {{ image.tag }}</li>
+                  <li><strong>Project URL:</strong>: <a href="{{ image.link }}">{{ image.link }}</a></li>
                 </ul>
                 <div class="col-12">
                   <p class="small mb-0"><b>Return Back <a href="/portfolio"> to the portfolio</a> page</b></p>
