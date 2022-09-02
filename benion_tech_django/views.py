@@ -252,9 +252,9 @@ def category_posts(request, params):
         if production:
             if post["category"] == params or post["tag"] == params:
                 items.append(post)
-            else:
-                if post.category == params or post.tag == params:
-                    items.append(post)
+        else:
+            if post.category == params or post.tag == params:
+                items.append(post)
     data = {
         'posts': items,
         'other_posts': other_posts,
@@ -302,7 +302,7 @@ def tag_posts(request, params):
         if production:
             if post["title"].lower().__contains__(string) or post["content"].lower().__contains__(string):
                 items.append(post)
-            else:
+        else:
                 if post.title.lower().__contains__(string) or post.content.lower().__contains__(string):
                     items.append(post)
     data = {

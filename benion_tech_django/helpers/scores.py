@@ -4,8 +4,7 @@ from benion_tech_django.settings import env
 from user_app.models import ExamScore
 
 base_url = 'https://benion-tech-server.herokuapp.com'
-production = True
-# production = env('PRODUCTION') == 'True'
+production = env('PRODUCTION') == 'True'
 data = [
     {
         "className": "sss-1",
