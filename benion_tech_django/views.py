@@ -5,7 +5,8 @@ from django.contrib import messages
 from user_app.models import UserDetail
 from benion_tech_django.settings import env
 from benion_tech_django.helpers.images import category_images, single_image
-from benion_tech_django.helpers.posts import get_posts, category_filter_posts, filter_posts, get_post
+from benion_tech_django.helpers.posts import get_posts, category_filter_posts, filter_posts_category, get_post, limit_post, filter_posts_tag
+from benion_tech_django.helpers.messages import send_contact_message
 from django.http import HttpResponse
 import urllib.request
 
@@ -29,52 +30,18 @@ def home(request):
     blog_posts = category_filter_posts(posts, "blog")
     news_posts = category_filter_posts(posts, "news")
     others_posts = category_filter_posts(posts, "others")
-    sports_posts = filter_posts(posts, "sport")
-    politics_posts = filter_posts(posts, "politics")
-    technology_posts = filter_posts(posts, "technology")
-    any_other_post = filter_posts(posts, "others")
-    other_posts = []
-    blog = []
-    news = []
-    others = []
-    sports = []
-    politics = []
-    technology = []
-    any_other = []
-    for index in range(5):
-        if len(posts) > 5:
-            other_posts.append(posts[index])
-        else:
-            other_posts = posts
-        if len(blog_posts) > 5:
-            blog.append(blog_posts[index])
-        else:
-            blog = blog_posts
-        if len(others_posts) > 5:
-            others.append(others_posts[index])
-        else:
-            others = others_posts
-        if len(news_posts) > 5:
-            news.append(news_posts[index])
-        else:
-            news = news_posts
-    for index in range(3):
-        if len(sports_posts) > 3:
-            sports.append(sports_posts[index])
-        else:
-            sports = sports_posts
-        if len(politics_posts) > 3:
-            politics.append(politics_posts[index])
-        else:
-            politics = politics_posts
-        if len(technology_posts) > 3:
-            technology.append(technology_posts[index])
-        else:
-            technology = technology_posts
-        if len(any_other_post) > 3:
-            any_other.append(any_other_post[index])
-        else:
-            any_other = any_other_post
+    sports_posts = filter_posts_category(posts, "sport")
+    politics_posts = filter_posts_category(posts, "politics")
+    technology_posts = filter_posts_category(posts, "technology")
+    any_other_post = filter_posts_category(posts, "others")
+    other_posts = limit_post(posts, 5)
+    blog = limit_post(blog_posts, 5)
+    news = limit_post(news_posts, 5)
+    others = limit_post(others_posts, 5)
+    sports = limit_post(sports_posts, 3)
+    politics = limit_post(politics_posts, 3)
+    technology = limit_post(technology_posts, 3)
+    any_other = limit_post(any_other_post, 3)
     data = {
         'other_posts': other_posts,
         'categories': categories, 'politics': politics,
@@ -155,12 +122,8 @@ def contact(request):
             'subject': request.POST['subject'],
             'message': request.POST['message']
         }
-        json_data = json.dumps(dict_data)
-        post_data = json_data.encode("utf-8")
-        # response = urllib.request.urlopen(
-        #     f'{base_url}/benion-cbt/api/cbt-scores', data=post_data, headers=headers
-        # ).read()
-        response = False
+        response = send_contact_message(dict_data)
+        print('Response', response)
         if response:
             error = 'Sorry an error occurred!'
             return render(request, 'contact.html', {'success': False, 'error': error})
@@ -188,27 +151,10 @@ def all_posts(request):
     blog_posts = category_filter_posts(posts, "blog")
     news_posts = category_filter_posts(posts, "news")
     others_posts = category_filter_posts(posts, "others")
-    other_posts = []
-    blog = []
-    news = []
-    others = []
-    for index in range(5):
-        if len(posts) > 5:
-            other_posts.append(posts[index])
-        else:
-            other_posts = posts
-        if len(blog_posts) > 5:
-            blog.append(blog_posts[index])
-        else:
-            blog = blog_posts
-        if len(others_posts) > 5:
-            others.append(others_posts[index])
-        else:
-            others = others_posts
-        if len(news_posts) > 5:
-            news.append(news_posts[index])
-        else:
-            news = news_posts
+    other_posts = limit_post(posts, 5)
+    blog = limit_post(blog_posts, 5)
+    news = limit_post(news_posts, 5)
+    others = limit_post(others_posts, 5)
     data = {
         'posts': posts,
         'other_posts': other_posts,
@@ -226,35 +172,11 @@ def category_posts(request, params):
     blog_posts = category_filter_posts(posts, "blog")
     news_posts = category_filter_posts(posts, "news")
     others_posts = category_filter_posts(posts, "others")
-    other_posts = []
-    blog = []
-    news = []
-    others = []
-    for index in range(5):
-        if len(posts) > 5:
-            other_posts.append(posts[index])
-        else:
-            other_posts = posts
-        if len(blog_posts) > 5:
-            blog.append(blog_posts[index])
-        else:
-            blog = blog_posts
-        if len(others_posts) > 5:
-            others.append(others_posts[index])
-        else:
-            others = others_posts
-        if len(news_posts) > 5:
-            news.append(news_posts[index])
-        else:
-            news = news_posts
-    items = []
-    for post in posts:
-        if production:
-            if post["category"] == params or post["tag"] == params:
-                items.append(post)
-        else:
-            if post.category == params or post.tag == params:
-                items.append(post)
+    other_posts = limit_post(posts, 5)
+    blog = limit_post(blog_posts, 5)
+    news = limit_post(news_posts, 5)
+    others = limit_post(others_posts, 5)
+    items = filter_posts_category(posts, params)
     data = {
         'posts': items,
         'other_posts': other_posts,
@@ -275,36 +197,11 @@ def tag_posts(request, params):
     blog_posts = category_filter_posts(posts, "blog")
     news_posts = category_filter_posts(posts, "news")
     others_posts = category_filter_posts(posts, "others")
-    other_posts = []
-    blog = []
-    news = []
-    others = []
-    for index in range(5):
-        if len(posts) > 5:
-            other_posts.append(posts[index])
-        else:
-            other_posts = posts
-        if len(blog_posts) > 5:
-            blog.append(blog_posts[index])
-        else:
-            blog = blog_posts
-        if len(others_posts) > 5:
-            others.append(others_posts[index])
-        else:
-            others = others_posts
-        if len(news_posts) > 5:
-            news.append(news_posts[index])
-        else:
-            news = news_posts
-    items = []
-    string = params.lower()
-    for post in posts:
-        if production:
-            if post["title"].lower().__contains__(string) or post["content"].lower().__contains__(string):
-                items.append(post)
-        else:
-                if post.title.lower().__contains__(string) or post.content.lower().__contains__(string):
-                    items.append(post)
+    other_posts = limit_post(posts, 5)
+    blog = limit_post(blog_posts, 5)
+    news = limit_post(news_posts, 5)
+    others = limit_post(others_posts, 5)
+    items = filter_posts_tag(posts, params.lower())
     data = {
         'posts': items,
         'other_posts': other_posts,
@@ -326,27 +223,10 @@ def single_post(request, params):
     blog_posts = category_filter_posts(posts, "blog")
     news_posts = category_filter_posts(posts, "news")
     others_posts = category_filter_posts(posts, "others")
-    other_posts = []
-    blog = []
-    news = []
-    others = []
-    for index in range(5):
-        if len(posts) > 5:
-            other_posts.append(posts[index])
-        else:
-            other_posts = posts
-        if len(blog_posts) > 5:
-            blog.append(blog_posts[index])
-        else:
-            blog = blog_posts
-        if len(others_posts) > 5:
-            others.append(others_posts[index])
-        else:
-            others = others_posts
-        if len(news_posts) > 5:
-            news.append(news_posts[index])
-        else:
-            news = news_posts
+    other_posts = limit_post(posts, 5)
+    blog = limit_post(blog_posts, 5)
+    news = limit_post(news_posts, 5)
+    others = limit_post(others_posts, 5)
     data = {
         'post': post,
         'other_posts': other_posts,
@@ -382,12 +262,7 @@ def coming_soon(request):
             'subject': request.POST['subject'],
             'message': request.POST['message']
         }
-        json_data = json.dumps(dict_data)
-        post_data = json_data.encode("utf-8")
-        # response = urllib.request.urlopen(
-        #     f'{base_url}/benion-cbt/api/cbt-scores', data=post_data, headers=headers
-        # ).read()
-        response = False
+        response = send_contact_message(dict_data)
         if response:
             error = 'Sorry an error occurred!'
             return render(request, 'coming-soon.html', {'success': False, 'message': error})

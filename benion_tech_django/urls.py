@@ -26,6 +26,7 @@ urlpatterns = [
     path('user/', include('user_app.urls')),
     path('chat/', include('chat_app.urls')),
     path('practice-area/', include('practice_area.urls')),
+    path('api/', include('api_app.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('send-message', chat_app_view.send_message, name='send-message'),
     path('get-messages', chat_app_view.GetMessages.as_view(), name='get-messages'),

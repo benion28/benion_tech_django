@@ -3,7 +3,7 @@ import urllib.request
 from benion_tech_django.settings import env
 from user_app.models import ExamScore
 
-base_url = 'https://benion-tech-server.herokuapp.com'
+base_url = env('BASE_URL')
 production = env('PRODUCTION') == 'True'
 data = [
     {

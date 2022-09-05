@@ -10,6 +10,9 @@ class DemoItem(models.Model):
     email = models.CharField(max_length=50)
     lastname = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.username
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -21,4 +24,7 @@ class Post(models.Model):
     category = models.CharField(max_length=15)
     tag = models.CharField(max_length=15)
     key = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f'{self.title} ({self.category}) -- {self.tag}'
 

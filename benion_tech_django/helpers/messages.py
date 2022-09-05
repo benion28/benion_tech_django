@@ -1,9 +1,10 @@
 import json
-import urllib.request
+from urllib import request, parse
 from benion_tech_django.settings import env
 from user_app.models import ContactMessage
 
-base_url = 'https://benion-tech-server.herokuapp.com'
+base_url = env('BASE_URL')
+headers = {'Content-Type': 'application/json'}
 production = env('PRODUCTION') == 'True'
 data = [
     {
@@ -656,7 +657,16 @@ def get_messages():
         messages.append(item)
     all_messages = messages
     if production:
-        response = urllib.request.urlopen(f'{base_url}/benion-users/api/contact-messages').read()
+        response = request.urlopen(f'{base_url}/benion-users/api/contact-messages').read()
         json_data = json.loads(response)
         all_messages = json_data['data'][3]
     return all_messages
+
+
+def send_contact_message(dict_data):
+    json_data = json.dumps(dict_data)
+    post_data = json_data.encode("utf-8")
+    url = f'{base_url}/benion-users/api/contact-us'
+    url_request = request.Request(url, data=post_data, headers=headers)
+    url_response = request.urlopen(url_request)
+    return url_response

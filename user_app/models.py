@@ -20,6 +20,9 @@ class UserDetail(models.Model):
     linkedin = models.CharField(default='#', max_length=40)
     about = models.TextField(max_length=500)
 
+    def __str__(self):
+        return self.username
+
 
 class CbtUser(models.Model):
     _id = models.CharField(max_length=30)
@@ -36,6 +39,9 @@ class CbtUser(models.Model):
     date = models.CharField(max_length=30)
     regType = models.CharField(max_length=10)
 
+    def __str__(self):
+        return f'{self.firstname} {self.lastname} ({self.username})'
+
 
 class CbtExam(models.Model):
     _id = models.CharField(max_length=30)
@@ -50,6 +56,9 @@ class CbtExam(models.Model):
     key = models.CharField(max_length=30)
     answered = models.CharField(max_length=500)
     answers = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f'{self.firstname} {self.lastname} ({self.username})'
 
 
 class ExamScore(models.Model):
@@ -68,6 +77,9 @@ class ExamScore(models.Model):
     session = models.CharField(max_length=500)
     className = models.CharField(max_length=10)
 
+    def __str__(self):
+        return f'{self.fullname} ({self.username})'
+
 
 class ContactMessage(models.Model):
     fullname = models.CharField(max_length=30)
@@ -77,6 +89,9 @@ class ContactMessage(models.Model):
     date = models.CharField(max_length=20)
     key = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.fullname
+
 
 class GalleryImage(models.Model):
     caption = models.CharField(max_length=50)
@@ -85,6 +100,9 @@ class GalleryImage(models.Model):
     link = models.CharField(max_length=100)
     tag = models.CharField(max_length=20)
     key = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f'{self.caption} ({self.category}) -- {self.tag}'
 
 
 

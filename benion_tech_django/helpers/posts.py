@@ -3,7 +3,7 @@ import urllib.request
 from benion_tech_django.settings import env
 from practice_area.models import Post
 
-base_url = 'https://benion-tech-server.herokuapp.com'
+base_url = env('BASE_URL')
 production = env('PRODUCTION') == 'True'
 
 
@@ -20,7 +20,7 @@ def get_posts():
     return all_posts
 
 
-def filter_posts(posts, value):
+def filter_posts_category(posts, value):
     items = []
     for post in posts:
         if production:
@@ -28,6 +28,18 @@ def filter_posts(posts, value):
                 items.append(post)
         else:
             if post.category == value or post.tag == value:
+                items.append(post)
+    return items
+
+
+def filter_posts_tag(posts, value):
+    items = []
+    for post in posts:
+        if production:
+            if post["title"].lower().__contains__(value) or post["content"].lower().__contains__(value):
+                items.append(post)
+        else:
+            if post.title.lower().__contains__(value) or post.content.lower().__contains__(value):
                 items.append(post)
     return items
 
@@ -56,3 +68,12 @@ def get_post(value):
                 item = post
     return item
 
+
+def limit_post(posts, total):
+    items = []
+    if len(posts) > total:
+        for index in range(total):
+            items.append(posts[index])
+    else:
+        items = posts
+    return items

@@ -12,7 +12,7 @@ from benion_tech_django.helpers.cbt_users import get_cbt_users
 from benion_tech_django.helpers.scores import get_scores
 from benion_tech_django.helpers.messages import get_messages
 from benion_tech_django.helpers.images import get_images
-from benion_tech_django.helpers.posts import get_posts, category_filter_posts
+from benion_tech_django.helpers.posts import get_posts, category_filter_posts, limit_post
 
 
 base_url = 'https://benion-tech-server.herokuapp.com'
@@ -46,7 +46,7 @@ def user_dashboard(request):
             'total_contact_messages': len(total_contact_messages),
             'total_posts': len(total_posts),
             'total_images': len(total_images),
-            'news_posts': news_posts
+            'news_posts': limit_post(news_posts, 6)
         }
         return render(request, 'user-dashboard.html', data)
 
